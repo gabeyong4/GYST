@@ -1,5 +1,5 @@
 <template>
-  <NavBar/>
+  <SideNavBar/>
   <h1>This is an about page</h1>
   <h1>Welcome to GYST</h1>
   <h3>Description of GYST: dnslfdkf</h3>
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue';
+import SideNavBar from '@/components/SideNavBar.vue';
 import LogOut from '@/components/LogOut.vue';
 export default {
     name: "AboutPage",
-    components: { NavBar, LogOut }
+    components: { SideNavBar, LogOut }
 }
 </script>
 

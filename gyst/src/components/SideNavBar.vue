@@ -1,82 +1,113 @@
 <template>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-  <div class="sidenav">
-    <div class="logo">
-    <img src="../assets/gyst_logo.png" atl = GYST>
-    </div> <br>
-    <h3> Menu </h3>
-    <div class = "menu">
-      <router-link class="button" to="">
-        <span class="material-symbols-outlined">attach_money</span>
-        <span class="text"> Budget Tracking </span>
-      </router-link> <br>
-      <router-link class="button" to="">
-        <span class="material-symbols-outlined">attach_money</span>
-        <span class="text"> Todo Goals </span>
-      </router-link>
-    </div>
-</div>
+  <div class="sidebar" :style= "{ width: sidebarWidth}">
+    <h3>
+      <span v-if="collapsed">
+        <div>GYST</div>
+      </span>
+      <span v-else> GYST </span>
+    </h3>
+
+    <SideBarLink to="/" icon="fa-solid fa-house-user"> Home </SideBarLink>
+    <SideBarLink to="/about" icon="fa-regular fa-page"> About </SideBarLink>
+    <SideBarLink to="/budget" icon = "fa-solid fa-dollar-sign"> Budget Tracking </SideBarLink>
+    <SideBarLink to="/todogoals" icon = "fa-solid fa-list-check"> To-do Goals</SideBarLink>
+
+    <span 
+      class = "collapse-icon" 
+      :class="{'rotate-180': collapsed}"
+      @click="toggleSidebar"
+    >
+      <i class="fas fa-angle-double-left"> </i> 
+    </span>
+
+  </div>
 </template>
 
 <script>
+import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {collapsed, toggleSidebar, sidebarWidth} from './state.js'
+import SideBarLink from "./SideBarLink.vue"
+
+
 export default {
-    name: "SideNavBar"
+    name: 'SideBar',
+
+    props: {},
+    components: {SideBarLink},
+
+    setup() {
+      return { collapsed, toggleSidebar, sidebarWidth }
+    },
+
+    data() {
+        return {
+            user: false,
+        }
+    },
+  
+    mounted() {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                this.user = user;
+            }
+        })
+    }
 
 }
 </script>
+
+<style>
+:root {
+  --sidebar-bg-color: #2f855a;
+  --sidebar-item-hover: #38a169;
+  --sidebar-item-active: #276749;
+}
+
+
+</style>
 
 <style scoped>
 
 
 /* The sidebar menu */
-.sidenav {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 30px;
-    letter-spacing: 0px;
-    text-align: left;
-
-    min-height: 100vh; /* Full-height: remove this if you want "auto" height */
-
-    width: 250px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    background-color: white; /* White */
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.170509);
+.sidebar {
+  color: white;
+  background-color: var(--sidebar-bg-color);
+  float: left;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding: 0.5em;
+  transition: 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
-/* The navigation menu links */
-.sidenav .menu {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #2C2C2C;
-  display: block;
+.sidebar span:hover {
+      font-weight: bold;
+      color: #2c3e50;
 }
 
-/* When you mouse over the navigation links, change their color */
-.sidenav .menu:hover {
-  color: #267FCA;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-/* @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-} */
-
-img {
+.collapse-icon {
   position: absolute;
-  width: 57px;
-  height: 43px;
-  left: 7px;
-  top: 6px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  bottom:0;
+  padding: 0.75em;
+  color: rgba(255,255,255,0.7);
+  transition: 0.2s linear;
 }
+
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: 0.2s linear;
+}
+
+
+a {
+  text-decoration: none;
+}
+
 
 </style>
