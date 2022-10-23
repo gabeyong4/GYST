@@ -1,28 +1,26 @@
 <template>
-  <div class="ellipse"></div>
+  
+<router-view/>
+
 </template>
 
 <script>
-import App from "./App.vue";
-import "../styleguide.css"
-import "../global.css"
-import vueConfig from "vue.config";
-Vue.config.productionTip = false;
-new Vue ({
-  render: h => h(App),
-}).$mount(App);
+
+console.log("in App")
+
 
 export default {
-  name: "App",
+    name: "App",
+    
 };
 </script>
 
 <style>
-  .ellipse {
-      background-color: #267fc9;
-      border: 1px none;
-      border-radius: 362px;
-      height: 724px;
-      width: 724px;
-  }
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 </style>
