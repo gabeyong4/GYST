@@ -1,17 +1,24 @@
 <template>
-  <NavBar/>
-  <h1>Welcome to your Home Page</h1>
+  <SideNavBar />
+  <div :style="{ 'margin-left' : sidebarWidth}">
+    <router-view></router-view>
+  </div>
   <LogOut/>
 </template>
 
 <script>
 import LogOut from '@/components/LogOut.vue';
-import NavBar from '@/components/NavBar.vue';
+import SideNavBar from '@/components/SideNavBar.vue';
+import { sidebarWidth } from '@/components/state';
 
 export default {
   name: 'App',
   
-  components: { LogOut, NavBar },
+  components: { LogOut, SideNavBar },
+
+  setup() {
+    return (sidebarWidth)
+  },
 
   data() {
 

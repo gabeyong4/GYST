@@ -1,6 +1,6 @@
 <template>
     <div id="bg" style="text-align:center;">
-        <img id="logo" src="@/assets/GYSTLogo.png" alt="" class="center">
+        <img id="logo" src="@/assets/gyst_logo.png" alt="" class="center">
         <div id="firebaseui-auth-container"></div>
         <div id="pagecontent">
             Welcome to GYST! Your one stop platform to track your expenses, to do lists, and much more!
