@@ -1,8 +1,10 @@
 import { createApp } from 'vue'
 import { createStore } from 'vuex'
 import App from './App.vue'
+import router from './router/index.js'
 
-const app = createApp(App);
+const app = createApp(App)
+
 
 // Create a store for our to do list items
 const store = createStore({
