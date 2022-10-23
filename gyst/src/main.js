@@ -1,9 +1,14 @@
-import { createApp } from 'vue'
+import { createApp} from 'vue'
 import { createStore } from 'vuex'
 import App from './App.vue'
 import router from './router/index.js'
 
+import "@fortawesome/fontawesome-free/js/all"
+
+
 const app = createApp(App)
+// .component("font-awesome-icon", FontAwesomeIcon)
+// .mount("#app")
 
 
 // Create a store for our to do list items

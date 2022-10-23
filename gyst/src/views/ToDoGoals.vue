@@ -1,6 +1,6 @@
 
 <template>
-    <NavBar/>
+    <SideNavBar/>
     <div id="todo-list">
         <div class="list-item" v-for="n in todos" :key="n.id">
             <div class="list-item-holder" v-if="n.location == location" :data-status="n.completed">
@@ -24,12 +24,12 @@
 <script>
 import { useStore } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
-import NavBar from '@/components/NavBar.vue';
+import SideNavBar from '@/components/SideNavBar.vue';
 import LogOut from '@/components/LogOut.vue';
 
 export default {
     name: "ToDoGoals",
-     components: { NavBar, LogOut },
+     components: { SideNavBar, LogOut },
     data() {
         return {
             newTodoItem: ''
