@@ -7,7 +7,7 @@
       <span v-else> GYST </span>
     </h3>
 
-    <SideBarLink to="/" icon="fa-solid fa-house-user"> Home </SideBarLink>
+    <SideBarLink to="/home" icon="fa-solid fa-house-user"> Home </SideBarLink>
     <SideBarLink to="/about" icon="fa-regular fa-page"> About </SideBarLink>
     <SideBarLink to="/budget" icon = "fa-solid fa-dollar-sign"> Budget Tracking </SideBarLink>
     <SideBarLink to="/todogoals" icon = "fa-solid fa-list-check"> To-do Goals</SideBarLink>
@@ -59,9 +59,9 @@ export default {
 
 <style>
 :root {
-  --sidebar-bg-color: #2f855a;
-  --sidebar-item-hover: #38a169;
-  --sidebar-item-active: #276749;
+  --sidebar-bg-color: #024775;
+  --sidebar-item-hover: #1547c8;
+  --sidebar-item-active: #046e98;
 }
 
 
