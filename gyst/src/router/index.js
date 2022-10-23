@@ -4,7 +4,6 @@ import About from '@/views/AboutPage.vue'
 import Budget from '@/views/BudgetPage.vue'
 import ToDoGoals from '@/views/ToDoGoals.vue'
 import Login from '@/views/LoginPage.vue'
-//import { create } from 'core-js/core/object'
 
 const routes = [
     {
