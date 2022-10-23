@@ -28,7 +28,7 @@ export default {
             const auth = getAuth();
             const user = auth.currentUser;
             signOut(auth, user)
-            this.$router.push({name: 'LoginPage'})
+            this.$router.push({name: 'Login'})
         }
     }
 
@@ -42,8 +42,7 @@ export default {
 }
 #btn:hover {
     color: rgb(243, 236, 236);
-    background-color: rgb(255,94,0);
-    box-shadow: 3px 3px grey
+    background-color: #6b1d1d;
 }
 
 </style>
