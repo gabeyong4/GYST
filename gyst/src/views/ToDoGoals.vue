@@ -1,4 +1,15 @@
 <template>
+//make setters and getters for goals in main.js
+    <div id="new-goal">
+        <input type="text" placeholder="Add a new goal.." id="new-goal-input" @keyup="updateGoal" />
+        <input type="submit" id="new-goal-submit" @click="newGoal" value="Add Goal" />
+    </div>
+    <div id = "goals">
+        <div class = "goal-item" v-for="n in goals" :key="n.id">
+            <div class ="goal-item-holder" v-if="n.location==location" :data-status="n-completed">
+
+
+        
     <div id="todo-list">
         <div class="list-item" v-for="n in todos" :key="n.id">
             <div class="list-item-holder" v-if="n.location == location" :data-status="n.completed">
@@ -22,10 +33,11 @@
 import { useStore } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
 export default {
-    name: "TodoList",
+    name: "TodoGoals",
     data() {
         return {
             newTodoItem: ''
+            newGoal: ''
         }
     },
     props: {
@@ -38,6 +50,9 @@ export default {
         }
     },
     methods: {
+        updateGoal: function(e) {
+            new.goal = e.currentTarget.value;
+        }
         updateItemText: function(e) {
             this.newTodoItem = e.currentTarget.value;
             if(e.keyCode === 13) {
@@ -124,3 +139,4 @@ export default {
     text-decoration: line-through;
 }
 </style>
+

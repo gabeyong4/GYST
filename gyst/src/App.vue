@@ -7,6 +7,13 @@ import App from "./App.vue";
 import "../styleguide.css"
 import "../global.css"
 import vueConfig from "vue.config";
+import { useStore } from 'vuex'
+export default {
+	beforeCreate() {
+        const store = useStore()
+		store.commit('loadStore');
+	}
+}
 Vue.config.productionTip = false;
 new Vue ({
   render: h => h(App),
