@@ -18,7 +18,7 @@ Vue.config.productionTip = false;
 new Vue ({
   render: h => h(App),
 }).$mount(App);
-
+console.log("in App")
 export default {
   name: "App",
 };

@@ -1,5 +1,5 @@
 <template>
-//make setters and getters for goals in main.js
+    <SideNavBar/>
     <div id="new-goal">
         <input type="text" placeholder="Add a new goal.." id="new-goal-input" @keyup="updateGoal" />
         <input type="submit" id="new-goal-submit" @click="newGoal" value="Add Goal" />
@@ -7,6 +7,7 @@
     <div id = "goals">
         <div class = "goal-item" v-for="n in goals" :key="n.id">
             <div class ="goal-item-holder" v-if="n.location==location" :data-status="n-completed">
+                >
 
 
         
@@ -27,6 +28,7 @@
             <input type="submit" id="new-todo-list-item-submit" @click="newItem" value="Add To Do List Item" />
         </div>
     </div>
+    <LogOut/>
 </template>
 
 <script>
@@ -34,6 +36,7 @@ import { useStore } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
 export default {
     name: "TodoGoals",
+    components: { SideNavBar, LogOut },
     data() {
         return {
             newTodoItem: ''
