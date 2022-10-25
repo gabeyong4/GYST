@@ -7,7 +7,7 @@
     <div id = "goals">
         <div class = "goal-item" v-for="n in goals" :key="n.id">
             <div class ="goal-item-holder" v-if="n.location==location" :data-status="n-completed">
-                >
+                
 
 
         
