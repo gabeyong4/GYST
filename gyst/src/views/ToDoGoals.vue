@@ -1,5 +1,7 @@
+
 <template>
     <SideNavBar/>
+<<<<<<< HEAD
     <div id="new-goal">
         <input type="text" placeholder="Add a new goal.." id="new-goal-input" @keyup="updateGoal" />
         <input type="submit" id="new-goal-submit" @click="newGoal" value="Add Goal" />
@@ -11,6 +13,8 @@
 
 
         
+=======
+>>>>>>> cb405a7c5949c1348ef2596db8d2e78a8a75d91e
     <div id="todo-list">
         <div class="list-item" v-for="n in todos" :key="n.id">
             <div class="list-item-holder" v-if="n.location == location" :data-status="n.completed">
@@ -34,9 +38,17 @@
 <script>
 import { useStore } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
+import SideNavBar from '@/components/SideNavBar.vue';
+import LogOut from '@/components/LogOut.vue';
+
 export default {
+<<<<<<< HEAD
     name: "TodoGoals",
     components: { SideNavBar, LogOut },
+=======
+    name: "ToDoGoals",
+     components: { SideNavBar, LogOut },
+>>>>>>> cb405a7c5949c1348ef2596db8d2e78a8a75d91e
     data() {
         return {
             newTodoItem: ''

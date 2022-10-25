@@ -1,13 +1,13 @@
 import {initializeApp} from 'firebase/app';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAPIGhfMjrACtwRI2s8SMEn9Fqb7Nabjyk",
-    authDomain: "democpp-61a4d.firebaseapp.com",
-    projectId: "democpp-61a4d",
-    storageBucket: "democpp-61a4d.appspot.com",
-    messagingSenderId: "1006777359079",
-    appId: "1:1006777359079:web:e244e26647013942d6a042"
-};
+    apiKey: "AIzaSyCfvjCnjs7vmJraB0jxVujb2-hAwPJPzWI",
+    authDomain: "gyst-7081b.firebaseapp.com",
+    projectId: "gyst-7081b",
+    storageBucket: "gyst-7081b.appspot.com",
+    messagingSenderId: "345895043547",
+    appId: "1:345895043547:web:a178bb95847171493be7fe"
+  };
 
 const firebaseApp = initializeApp(firebaseConfig);
 
