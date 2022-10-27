@@ -1,20 +1,17 @@
 
 <template>
     <SideNavBar/>
-<<<<<<< HEAD
-    <div id="new-goal">
+    <!-- <div id="new-goal">
         <input type="text" placeholder="Add a new goal.." id="new-goal-input" @keyup="updateGoal" />
         <input type="submit" id="new-goal-submit" @click="newGoal" value="Add Goal" />
     </div>
     <div id = "goals">
         <div class = "goal-item" v-for="n in goals" :key="n.id">
             <div class ="goal-item-holder" v-if="n.location==location" :data-status="n-completed">
-                
+                 -->
 
 
         
-=======
->>>>>>> cb405a7c5949c1348ef2596db8d2e78a8a75d91e
     <div id="todo-list">
         <div class="list-item" v-for="n in todos" :key="n.id">
             <div class="list-item-holder" v-if="n.location == location" :data-status="n.completed">
@@ -42,16 +39,11 @@ import SideNavBar from '@/components/SideNavBar.vue';
 import LogOut from '@/components/LogOut.vue';
 
 export default {
-<<<<<<< HEAD
     name: "TodoGoals",
     components: { SideNavBar, LogOut },
-=======
-    name: "ToDoGoals",
-     components: { SideNavBar, LogOut },
->>>>>>> cb405a7c5949c1348ef2596db8d2e78a8a75d91e
     data() {
         return {
-            newTodoItem: ''
+            newTodoItem: '',
             newGoal: ''
         }
     },
@@ -66,8 +58,8 @@ export default {
     },
     methods: {
         updateGoal: function(e) {
-            new.goal = e.currentTarget.value;
-        }
+            this.goal = e.currentTarget.value;
+        },
         updateItemText: function(e) {
             this.newTodoItem = e.currentTarget.value;
             if(e.keyCode === 13) {
