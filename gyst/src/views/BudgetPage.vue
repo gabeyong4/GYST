@@ -1,43 +1,35 @@
 <template>
   <SideNavBar/>
-  <h1>This is the Budget Page</h1>
-  <LogOut/>
-  <h1> this sidebar is {{ collapsed ? 'closed' : 'open'}} </h1>
-  <button @click="toggleSidebar"> Toggle Side bar </button>
+  <div class="header">
+    <h1>This is the Budget Page</h1>
+  </div>
+  <BudgetTable/>
+  
+  
 </template>
 
 <script>
-import {collapsed, toggleSidebar} from "@/components/state.js"
 import SideNavBar from '@/components/SideNavBar.vue';
-import LogOut from '@/components/LogOut.vue';
+import BudgetTable from '@/components/BudgetTable.vue';
 
 export default {
   name: "BudgetPage",
-  components: { SideNavBar, LogOut },
-  setup() {
-        return {collapsed, toggleSidebar}
-    }
+  components: { SideNavBar, BudgetTable}
 }
 </script>
 
 <style>
+
+.header {
+  float: right;
+  margin: 0 1.5%;
+  width: 73%;
+}
+
+#table {
+  float: right;
+  margin: 0 1.5%;
+  width: 73%;
+}
 
 </style>
-<!-- <template>
-  <NavBar/>
-  <h1>This is the Budget Page</h1>
-  <LogOut/>
-</template>
-
-<script>
-import NavBar from '@/components/NavBar.vue';
-import LogOut from '@/components/LogOut.vue';
-export default {
-    name: "BudgetPage",
-    components: { NavBar, LogOut }
-}
-</script>
-
-<style>
-
-</style> -->

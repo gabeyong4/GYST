@@ -1,9 +1,15 @@
 <template>
-  <button id="btn" @click="signOut()" v-if="user">Logout</button>
+    
+    <button id="btn" @click="signOut()" v-if="user">
+        <i class="fa fa-sign-out"></i>Logout
+    </button>
 </template>
 
 <script>
 import {getAuth, onAuthStateChanged, signOut} from "firebase/auth"
+import { computed } from "vue"
+import { useRoute } from "vue-router"
+import { collapsed } from "./state.js"
 
 export default {
     name: "LogOut",
@@ -30,6 +36,13 @@ export default {
             signOut(auth, user)
             this.$router.push({name: 'Login'})
         }
+    },
+
+    setup(props) {
+        const route = useRoute()
+        const isActive = computed(() => route.path === props.to)
+        return {isActive, collapsed}
+
     }
 
 }
@@ -37,12 +50,17 @@ export default {
 
 <style>
 #btn {
-    text-align: center;
-    margin: auto;
-}
-#btn:hover {
-    color: rgb(243, 236, 236);
-    background-color: #6b1d1d;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    font-weight: 400;
+    user-select: none;
+    margin: 0.1em 0;
+    padding: 0.4em;
+    border-radius: 0.25em;
+    height: 1.5em;
+    text-decoration: none;
 }
 
 </style>
