@@ -1,17 +1,31 @@
-
 <template>
     <SideNavBar/>
+<<<<<<< HEAD
     <!-- <div id="new-goal">
+=======
+    <div id="new-goal">
+>>>>>>> angel
         <input type="text" placeholder="Add a new goal.." id="new-goal-input" @keyup="updateGoal" />
-        <input type="submit" id="new-goal-submit" @click="newGoal" value="Add Goal" />
+        <input type="submit" id="new-goal-submit" @click="addGoal" value="Add Goal" />
     </div>
     <div id = "goals">
         <div class = "goal-item" v-for="n in goals" :key="n.id">
+<<<<<<< HEAD
             <div class ="goal-item-holder" v-if="n.location==location" :data-status="n-completed">
                  -->
 
 
         
+=======
+            <div class ="goal-item-holder" v-if="n.location==location" :data-status="n.completed">
+                <div class = "goal-items" :data-status="n.completed"></div>
+                <div class="goal-options">
+                    <div class="delete-goal" @click="deleteGoal" :data-id="n.id">Delete</div>
+                </div>
+            </div>
+        </div>                       
+    </div>
+>>>>>>> angel
     <div id="todo-list">
         <div class="list-item" v-for="n in todos" :key="n.id">
             <div class="list-item-holder" v-if="n.location == location" :data-status="n.completed">
@@ -40,7 +54,11 @@ import LogOut from '@/components/LogOut.vue';
 
 export default {
     name: "TodoGoals",
+<<<<<<< HEAD
     components: { SideNavBar, LogOut },
+=======
+    components: { SideNavBar, LogOut},
+>>>>>>> angel
     data() {
         return {
             newTodoItem: '',
@@ -54,12 +72,23 @@ export default {
         const store = useStore()
         return {
             todos: store.getters.todos,
+            goals:store.getters.goals,
         }
     },
     methods: {
         updateGoal: function(e) {
+<<<<<<< HEAD
             this.goal = e.currentTarget.value;
         },
+=======
+            this.newGoal = e.currentTarget.value;
+            if(e.keyCode === 13) {
+                this.addGoal();
+            }
+            return false;
+        },
+
+>>>>>>> angel
         updateItemText: function(e) {
             this.newTodoItem = e.currentTarget.value;
             if(e.keyCode === 13) {
@@ -80,11 +109,27 @@ export default {
                 id: e.currentTarget.getAttribute('data-id')
             })
         },
+        deleteGoal: function(e) {
+            this.$store.commit('deleteGoal', {
+                id: e.currentTarget.getAttribute('data-id')
+            })
+        },
+
         newItem: function() {
             if(this.newTodoItem !== '') {
                 this.$store.commit('addTodo', {
                     id: uuidv4(),
                     name: this.newTodoItem,
+                    completed: false
+                })
+            }
+        },
+
+        addGoal: function() {
+            if(this.newGoal !== '') {
+                this.$store.commit('addGoal', {
+                    id: uuidv4(),
+                    name: this.newGoal,
                     completed: false
                 })
             }
@@ -99,7 +144,20 @@ export default {
 }
 </script>
 <style scoped>
+#new-goal {
+    padding: 1rem;
+}
+
+#new-goal input[type="text"] {
+    margin: 0 0 1rem 0;
+}
+
 #todo-list {
+    border-radius: 14px;
+    max-width: 400px;
+    border: 2px solid #ddd;
+}
+#goals {
     border-radius: 14px;
     max-width: 400px;
     border: 2px solid #ddd;
@@ -110,7 +168,16 @@ export default {
     justify-content: space-between;
     border-bottom: 1px solid #ddd;
 }
+.goal-item-holder {
+    display: flex;
+    padding: 1rem 1rem;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+}
 .item-options, .item-checkbox  {
+    display: flex;
+}
+.goal-options {
     display: flex;
 }
 #new-todo-list-item {
@@ -130,11 +197,26 @@ export default {
     cursor: pointer;
     padding: 0.25rem 0.75rem;
 }
+.delete-goal {
+    font-size: 0.875rem;
+    background: #eee;
+    margin: 0 0 0 0.5rem;
+    height: 1rem;
+    border-radius: 100px;
+    transition: all 0.1s ease-out;
+    color: rgba(0,0,0,0.5);
+    cursor: pointer;
+    padding: 0.25rem 0.75rem;
+}
 .checkbox-items {
     display: flex;
     align-items: center;
 }
 .delete-item:hover, .archive-item:hover {
+    background: #ddd;
+    color: black;
+}
+.delete-goal:hover{
     background: #ddd;
     color: black;
 }
