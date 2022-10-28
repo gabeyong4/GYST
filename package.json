@@ -3,6 +3,7 @@
     "firebaseui": "^0.600.0",
     "serve": "^6.5.8",
     "vue": "^3.2.41",
+    "vue-editortable": "^1.1.5",
     "vue-router": "^4.1.5"
   }
 }
