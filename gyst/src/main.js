@@ -29,10 +29,10 @@ const store = createStore({
                 // name<String> is the name of our item
                 // completed<Boolean> is set to true when done, false when not
                 // location<['home', 'archive']> is set to home or archive depending on which page we want to show it on
-                { id: 'first-element', name: 'My First To Do Item', completed: false, location: 'home' }
+                { id: 'first-element', name: 'My First To Do Item', completed: false, location: 'toDoGoals' }
             ],
             goals: [
-                { id: 'first-goal', name: 'My First Goal', completed: false, location:'home'}
+                { id: 'first-goal', name: 'My First Goal', completed: false, location:'toDoGoals'}
             ]
         }
     },
@@ -78,7 +78,7 @@ const store = createStore({
                     id: todoItem.id,
                     name: todoItem.name,
                     completed: todoItem.completed,
-                    location: 'home'
+                    location: 'toDoGoals'
                 })
             }
         },
@@ -89,7 +89,7 @@ const store = createStore({
                     id: newGoal.id,
                     name: newGoal.name,
                     completed: newGoal.completed,
-                    location: 'home'
+                    location: 'toDoGoals'
                 })
             }
         },
