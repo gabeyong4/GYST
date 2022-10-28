@@ -1,39 +1,12 @@
 <template>
 
-<<<<<<< HEAD
-  <router-view/>
-  
-  </template>
-  
-  <script>
-  console.log("in App")
-  
-  export default {
-      name: "App",
-      
-  };
-  </script>
-  
-  <style>
-
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
-
-  </style>
-  
-=======
 <router-view/>
 
 </template>
 
 <script>
 //import App from "./App.vue";
-//import "../styleguide.css"
+import "/Users/angelkoh/Desktop/BT3103/GYST/gyst/src/styleguide.css"
 //import "../global.css"
 //import vueConfig from "vue.config";
 import { useStore } from 'vuex'
@@ -56,14 +29,13 @@ console.log("in App")
 </script>
 
 <style>
-/* #app {
+#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-} */
+} 
 
 
 </style>
->>>>>>> angel
