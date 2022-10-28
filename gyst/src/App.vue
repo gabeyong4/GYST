@@ -6,7 +6,7 @@
 
 <script>
 //import App from "./App.vue";
-import "/Users/angelkoh/Desktop/BT3103/GYST/gyst/src/styleguide.css"
+import "./styleguide.css"
 //import "../global.css"
 //import vueConfig from "vue.config";
 import { useStore } from 'vuex'
