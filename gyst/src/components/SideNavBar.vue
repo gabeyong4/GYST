@@ -1,31 +1,34 @@
 <template>
   <div class="sidebar" :style= "{ width: sidebarWidth}">
     <h3>
-      <span v-if="collapsed">
-        <div>GYST</div>
-      </span>
-      <span v-else> GYST </span>
+    <span v-if="collapsed">
+      <img id="logo" src="@/assets/gyst_logo.png" alt="" class="center">
+    </span>
+    <span v-else> 
+      <img id="logo" src="@/assets/gyst_logo.png" alt="" class="center">
+    </span>
     </h3>
-
+    <br>
     <SideBarLink to="/home" icon="fa-solid fa-house-user"> Home </SideBarLink>
     <SideBarLink to="/about" icon="fa-regular fa-page"> About </SideBarLink>
     <SideBarLink to="/budget" icon = "fa-solid fa-dollar-sign"> Budget Tracking </SideBarLink>
     <SideBarLink to="/todogoals" icon = "fa-solid fa-list-check"> To-do Goals</SideBarLink>
-
-    <span 
+    <LogOut icon="fa fa-sign-out"> </LogOut>
+    <!-- <span 
       class = "collapse-icon" 
       :class="{'rotate-180': collapsed}"
       @click="toggleSidebar"
     >
       <i class="fas fa-angle-double-left"> </i> 
-    </span>
+    </span> -->
 
   </div>
 </template>
 
 <script>
+import LogOut from '@/components/LogOut.vue';
 import {getAuth, onAuthStateChanged} from "firebase/auth";
-import {collapsed, toggleSidebar, sidebarWidth} from './state.js'
+import {sidebarWidth} from './state.js'
 import SideBarLink from "./SideBarLink.vue"
 
 
@@ -33,10 +36,10 @@ export default {
     name: 'SideBar',
 
     props: {},
-    components: {SideBarLink},
+    components: {SideBarLink,LogOut},
 
     setup() {
-      return { collapsed, toggleSidebar, sidebarWidth }
+      return { sidebarWidth }
     },
 
     data() {
@@ -59,9 +62,9 @@ export default {
 
 <style>
 :root {
-  --sidebar-bg-color: #024775;
-  --sidebar-item-hover: #1547c8;
-  --sidebar-item-active: #046e98;
+  --sidebar-bg-color: #267FCA;
+  --sidebar-item-hover: #4291d1;
+  --sidebar-item-active: #4291d1;
 }
 
 
@@ -75,6 +78,7 @@ export default {
   color: white;
   background-color: var(--sidebar-bg-color);
   float: left;
+  width: 0 1.5%;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -83,7 +87,7 @@ export default {
   padding: 0.5em;
   transition: 0.3s ease;
   display: flex;
-  flex-direction: column;
+  flex-direction:column;
 }
 
 .sidebar span:hover {
@@ -91,23 +95,32 @@ export default {
       color: #2c3e50;
 }
 
-.collapse-icon {
+/* .collapse-icon {
   position: absolute;
   bottom:0;
   padding: 0.75em;
   color: rgba(255,255,255,0.7);
   transition: 0.2s linear;
-}
+} */
 
-.rotate-180 {
+/* .rotate-180 {
   transform: rotate(180deg);
   transition: 0.2s linear;
-}
+} */
 
 
 a {
   text-decoration: none;
 }
 
+#logo {
+  position: absolute;
+  width: 57px;
+  height: 43px;
+  left: 7px;
+  top: 6px;
+  user-select: none;
+  margin: 0.1em 0;
+}
 
 </style>

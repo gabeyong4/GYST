@@ -7,14 +7,13 @@
 </template>
 
 <script>
-import LogOut from '@/components/LogOut.vue';
 import SideNavBar from '@/components/SideNavBar.vue';
 import { sidebarWidth } from '@/components/state';
 
 export default {
   name: 'App',
   
-  components: { LogOut, SideNavBar },
+  components: {SideNavBar},
 
   setup() {
     return (sidebarWidth)
@@ -27,5 +26,6 @@ export default {
 </script>
 
 <style>
+
 
 </style>
