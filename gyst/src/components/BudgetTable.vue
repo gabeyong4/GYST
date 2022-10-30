@@ -1,11 +1,12 @@
 <template>
     <AgGridVue/>
-    <button id="addnewRows" v-on:click = "addNewRow(); redrawAllRows();"> Add New Row </button>
-    <button non="deselectRows">deselect rows</button>
+    <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button>
+    <!-- <button non="deselectRows">deselect rows</button> -->
     <ag-grid-vue
     class="ag-theme-alpine"
     :columnDefs = "columnDefs"
     :rowData = "rowData"
+    @cell-value-changed = "save"
     >
     </ag-grid-vue>
 </template>
@@ -17,7 +18,12 @@
   import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
   import firebaseApp from "../firebase.js";
   import {getFirestore} from "firebase/firestore";
-  import {collection, getDocs, query, setDoc, doc} from "firebase/firestore"; // , doc, deleteDoc
+  import {addDoc, collection, getDocs, query, getCountFromServer, where, setDoc, doc} from "firebase/firestore"; // , doc, deleteDoc, setDoc
+  import { getAuth } from "@firebase/auth";
+
+// const auth = getAuth()
+// this.fbuser = auth.currentUser.email
+//   const email = user.email
 
   const db = getFirestore(firebaseApp);
   
@@ -41,7 +47,7 @@
     data() {
         return {
             columnDefs: null,
-            rowData:[], 
+            rowData:[],
             detailCellRendererParams: null
         };
     },
@@ -51,31 +57,48 @@
     },
 
     created() {
+        // this.createCollection()
         this.getBudget();
-        
     },
 
     methods: {
-        async getBudget() {
-            let z = await getDocs(query(collection(db, "Budget Tasks")));
+        // async getEmail() {
+        //     const auth = getAuth();
+        //     const user = auth.currentUser;
+        //     const email = user.email
+        // },
 
+
+        async getBudget() {
+            const auth = getAuth();
+            const user = auth.currentUser;
+            this.fbuser = String(user.email)
+            const coll = collection(db, this.fbuser);
+            const snapshot = await getCountFromServer(coll);
+            console.log('count: ', snapshot.data().count); // getting the count of documents
+            let z = await getDocs(query(collection(db, String(this.fbuser))));
             z.forEach((doc) => {
+                console.log(doc)
                 this.rowData.push(doc.data())
             })
         },
 
         async addNewRow() {
+            const auth = getAuth();
+            const user = auth.currentUser;
+            this.fbuser = String(user.email)
             try {
-                const newRow = await setDoc(doc(db, "Budget Tasks", "1234556"),{
-                task: "",
-                amount:0,
-                date:"",
-                category:"",
-                comments:""
-            })
+                const newRow = await addDoc(collection(db, this.fbuser), {
+                    tasks: "sample",
+                    amount:0,
+                    date:"sample",
+                    category:"sample",
+                    comments:"sample"
+                });
                 console.log(newRow)
                 alert("refresh")
-                this.$router.go()
+                // this.$router.go()
+                window.location.reload()
                 // document.getElementById("myform").reset();
                 this.$emit("added")
             }
@@ -84,6 +107,36 @@
                 console.error("Error adding document ", error)
             }
             
+        },
+
+        async save(event) {
+            const oldVal = event.oldValue
+            console.log(oldVal)
+            const currData = event.data
+            console.log(currData)
+            const auth = getAuth();
+            const user = auth.currentUser;
+            this.fbuser = String(user.email)
+            // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
+            const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
+            const querySnapshot = await getDocs(q);
+            var currID;
+            querySnapshot.forEach((doc) => { // did not account for multiple queries here
+                currID = doc.id
+                console.log(doc.id, " => ", doc.data());
+            });
+
+            await setDoc(doc(db, this.fbuser, currID), {
+                tasks: currData.tasks,
+                amount:currData.amount,
+                date:currData.date,
+                category:currData.category,
+                comments:currData.comments
+            });
+            
+
+            // console.log('onCellValueChanged: ' + event.oldValue + ' to ' + event.newValue + " ")
+
         }
     },
     
@@ -116,6 +169,15 @@
 
         this.rowData
     }
+
+    // mounted() {
+    //     const auth = getAuth();
+    //     onAuthStateChanged(auth, (user) => {
+    //         if (user) {
+    //             this.user = user;
+    //         }
+    //     })
+    // }
 
         // DefaultColDef sets props common to all Columns
         // const defaultColDef = {
