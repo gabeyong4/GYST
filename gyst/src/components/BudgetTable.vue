@@ -48,7 +48,8 @@
         return {
             columnDefs: null,
             rowData:[],
-            detailCellRendererParams: null
+            detailCellRendererParams: null,
+            categories: ["Transport", "Food & Drinks", "Entertainment", "Clothes", "Vacation"]
         };
     },
 
@@ -111,14 +112,16 @@
 
         async save(event) {
             const oldVal = event.oldValue
-            console.log(oldVal)
+            const columnChanged = event.colDef.field
+            console.log("old val: " + oldVal)
+            // console.log(event.colDef.field)
             const currData = event.data
-            console.log(currData)
+            console.log(typeof currData.amount)
             const auth = getAuth();
             const user = auth.currentUser;
             this.fbuser = String(user.email)
             // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
-            const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
+            const q = query(collection(db, this.fbuser), where(columnChanged, "==", oldVal));
             const querySnapshot = await getDocs(q);
             var currID;
             querySnapshot.forEach((doc) => { // did not account for multiple queries here
@@ -128,7 +131,7 @@
 
             await setDoc(doc(db, this.fbuser, currID), {
                 tasks: currData.tasks,
-                amount:currData.amount,
+                amount:Number(currData.amount),
                 date:currData.date,
                 category:currData.category,
                 comments:currData.comments
@@ -161,9 +164,9 @@
         // Each Column Definition results in one Column.
         this.columnDefs = [
             {headerName:"Task Details" , field:"tasks", editable: true, sortable: true, filter: true},
-            {headerName:"Amount" , field:"amount", editable: true, sortable: true, filter: true},
-            {headerName:"Date" , field:"date", editable: true, sortable: true, filter: true},
-            {headerName:"Category" , field:"category", editable: true, sortable: true, filter: true},
+            {headerName:"Amount" , field:"amount", editable: true, sortable: true, filter: true, type: "numberColumn"},
+            {headerName:"Date" , field:"date", editable: true, sortable: true, filter: true, type: "dateColumn"},
+            {headerName:"Category" , field:"category", cellEditorParams: {values : this.categories }, editable: true, sortable: true, filter: true, cellEditor: "agSelectCellEditor"},
             {headerName:"Comments" , field:"comments", editable: true, sortable: true, filter: true}
         ],
 

@@ -6,11 +6,13 @@ import router from './router/index.js'
 import VueEditortable from "vue-editortable"
 
 import "@fortawesome/fontawesome-free/js/all"
+
 // import { BootstrapVue } from 'bootstrap-vue'
 // import "bootstrap/dist/css/bootstrap.css"
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-
+import VueChartkick from 'vue-chartkick'
+import 'chartkick/chart.js'
 
 // Vue.use(BootstrapVue)
 
@@ -131,4 +133,4 @@ store.subscribe((_mutation, state) => {
 	localStorage.setItem('store', JSON.stringify(state));
 })
 
-app.use(router).use(store).mount('#app')
+app.use(router).use(store).use(VueChartKick).mount('#app')
