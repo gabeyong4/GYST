@@ -12,7 +12,13 @@ import "@fortawesome/fontawesome-free/js/all"
 // import { BootstrapVue } from 'bootstrap-vue'
 // import "bootstrap/dist/css/bootstrap.css"
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
+<<<<<<< HEAD
 createApp(App).use(router).use(BootstrapIconsPlugin).mount('#app')
+=======
+
+
+
+>>>>>>> main
 // Vue.use(BootstrapVue)
 
 // Vue.use(IconsPlugin)
