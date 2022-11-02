@@ -1,149 +1,186 @@
+/* eslint-disable vue/no-unused-components */
 <template>
-  <div id="todo-list">
-        <h1>All Tasks</h1>
-        <div class="list-item" v-for="n in todos" :key="n.id">
-            <div class="list-item-holder" v-if="n.location == location" :data-status="n.completed">
-                <div class="checkbox-items" :data-status="n.completed">
-                    <input type="checkbox" :data-id="n.id" :id="n.id" @click="updateTodo" :checked="n.completed" /> <label :data-id="n.id" :for="n.id" >{{ n.name }}</label>
-                </div>
-                <div class="item-options">
-                    <div class="delete-item" @click="deleteItem" :data-id="n.id">Delete</div>
-                    <div class="archive-item" v-if="n.location !== 'archive'" @click="archiveItem" :data-id="n.id">Archive</div>
-                </div>
-            </div>
-        </div>
-        <div id="new-todo-list-item">
-            <input type="text" placeholder="Add a new item.." id="new-todo-list-item-input" @keyup="updateItemText" />
-            <input type="submit" id="new-todo-list-item-submit" @click="newItem" value="Add To Do List Item" />
-        </div>
+  <div class="container position-r-0 shadow-lg px-5 py-5 rounded-3">
+    <h1 class="mb-5">To Do List</h1>
+
+    <div class="d-flex mb-5">
+      <input v-model="newTodo" type="text" placeholder="Add a new item" class="form-control form-input me-3"/>
+      <button type="submit" class="submit-btn px-3 py-2" @click="addTodo()">Add To Do List Item</button>
     </div>
+    <div class="row todo-list shadow px-3 pt-3 pb-2 align-items-center mb-4" v-for="(todo, index) in todos" :key="index">
+      <div class="col-7 text-start">
+        <h5 :class="{ 'todo-finished': todo.status === 'finished' }">{{ todo.name }}</h5>
+      </div>
+      <div class="col-2">
+        <div class="d-flex justify-content-start align-items-center">
+          <div class="status-indicator mb-1 me-2" :class="{
+              'status-indicator-todo': todo.status === 'to-do',
+              'status-indicator-ongoing': todo.status === 'on-going',
+              'status-indicator-finished': todo.status === 'finished',
+            }"></div>
+          <div class="status-text" @click="changeStatus(index)" :class="{
+              'status-text-todo': todo.status === 'to-do',
+              'status-text-ongoing': todo.status === 'on-going',
+              'status-text-finished': todo.status === 'finished',
+            }">
+            <h5>{{ todo.status }}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 text-end action-btn">
+        <div class="d-flex justify-content-end">
+          <div class="" @click="upTodo(index)">
+            <i class="fas fa-arrow-up ml-4"></i>
+          </div>
+          <div class="" @click="downTodo(index)">
+            <i class="fas fa-arrow-down ml-4"></i>
+          </div>
+          <div class="" @click="editTodo(index)">
+            <i class="far fa-edit ml-4"></i>
+          </div>
+          <div class="" @click="deleteTodo(index)">
+            <i class="far fa-trash-alt ml-4"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { useStore } from 'vuex'
-import { v4 as uuidv4 } from 'uuid'
+//import { BIcon, BIconArrowUp } from 'bootstrap-vue'
 export default {
-    name: "TodoList",
-    data() {
-        return {
-            newTodoItem: ''
-        }
+  name: "ToDo",
+  data() {
+    return {
+      newTodo: "",
+      indexEditTodo: null,
+      tempNameTodo: "",
+      tempStatusTodo: "",
+      todoStatus: ["to-do", "on-going", "finished"],
+      todos: [
+        {
+          name: "Exercise",
+          status: "to-do",
+        },
+        {
+          name: "BT3103 Midterm Project",
+          status: "finished",
+        },
+        {
+          name: "BT3103 Final Project",
+          status: "on-going",
+        },
+      ],
+    };
+  },
+  /*components: {
+      BIcon,
+      // eslint-disable-next-line vue/no-unused-components
+      BIconArrowUp
+    },*/
+  methods: {
+    addTodo() {
+      if (this.newTodo.length === 0) return;
+      if (this.indexEditTodo === null) {
+        this.todos.push({
+          name: this.newTodo,
+          status: "to-do",
+        });
+      } else {
+        this.todos[this.indexEditTodo].name = this.newTodo;
+        this.indexEditTodo = null;
+      }
+      this.newTodo = "";
     },
-    props: {
-        location: String
+    editTodo(index) {
+      this.newTodo = this.todos[index].name;
+      this.indexEditTodo = index;
     },
-    setup() {
-        const store = useStore()
-        return {
-            todos: store.getters.todos,
-        }
+    deleteTodo(index) {
+      this.todos.splice(index, 1);
     },
-    methods: {
-        updateItemText: function(e) {
-            this.newTodoItem = e.currentTarget.value;
-            if(e.keyCode === 13) {
-                this.newItem();
-            }
-            return false;
-            
-        },
-        updateTodo: function(e) {
-            let newStatus = e.currentTarget.parentElement.getAttribute('data-status') == "true" ? false : true;
-            this.$store.commit('updateTodo', {
-                id: e.currentTarget.getAttribute('data-id'),
-                completed: newStatus
-            })
-        },
-        deleteItem: function(e) {
-            this.$store.commit('deleteTodo', {
-                id: e.currentTarget.getAttribute('data-id')
-            })
-        },
-        newItem: function() {
-            if(this.newTodoItem !== '') {
-                this.$store.commit('addTodo', {
-                    id: uuidv4(),
-                    name: this.newTodoItem,
-                    completed: false
-                })
-            }
-        },
-        archiveItem: function(e) {
-            this.$store.commit('moveTodoItem', {
-                id: e.currentTarget.getAttribute('data-id'),
-                location: 'archive'
-            })
-        }
-    }
-}
+    changeStatus(index) {
+      let statusIndex = this.todoStatus.indexOf(this.todos[index].status);
+      if (++statusIndex > 2) statusIndex = 0;
+      this.todos[index].status = this.todoStatus[statusIndex];
+    },
+    upTodo(index) {
+      if (index === 0) return;
+      this.tempNameTodo = this.todos[index].name;
+      this.tempStatusTodo = this.todos[index].status;
+      this.todos[index].name = this.todos[index - 1].name;
+      this.todos[index].status = this.todos[index - 1].status;
+      this.todos[index - 1].name = this.tempNameTodo;
+      this.todos[index - 1].status = this.tempStatusTodo;
+    },
+    downTodo(index) {
+      if (index === this.todos.length - 1) return;
+      this.tempNameTodo = this.todos[index].name;
+      this.tempStatusTodo = this.todos[index].status;
+      this.todos[index].name = this.todos[index + 1].name;
+      this.todos[index].status = this.todos[index + 1].status;
+      this.todos[index + 1].name = this.tempNameTodo;
+      this.todos[index + 1].status = this.tempStatusTodo;
+    },
+  },
+};
 </script>
 
 <style scoped>
-#todo-list {
-    /*float: right;
-    margin: 0 1.5%;
-    border-radius: 14px;
-    max-width: 400px;
-    border: 2px solid #ddd;*/
-    top: 500px;
-    left: 450px;
-    width: 1189px;
-    height: 500px;
-    position: absolute;
-    border-color: rgba(223, 224, 235, 1);
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 8px;
-}
-
-.list-item-holder {
-    float: right;
-    margin: 0 1.5%;
-    display: flex;
-    padding: 1rem 1rem;
-    justify-content: space-between;
-    border-bottom: 1px solid #ddd;
-}
-
-.item-options, .item-checkbox  {
-    display: flex;
-}
-
-#new-todo-list-item {
-    top: 600px;
-    float: right;
-    margin: 0 1.5%;
-    padding: 1rem;
-}
-#new-todo-list-item input[type="text"] {
-    margin: 0 0 1rem 0;
-}
-.delete-item, .archive-item {
-    font-size: 0.875rem;
-    background: #eee;
-    margin: 0 0 0 0.5rem;
-    height: 1rem;
-    border-radius: 100px;
-    transition: all 0.1s ease-out;
-    color: rgba(0,0,0,0.5);
-    cursor: pointer;
-    padding: 0.25rem 0.75rem;
-}
-
-.checkbox-items {
-    display: flex;
-    align-items: center;
-}
-.delete-item:hover, .archive-item:hover {
-    background: #ddd;
-    color: black;
-}
-
-[data-status="false"] label {
-    color: #0428ff;
-    font-weight: 600;
-}
-[data-status="true"] label {
+    .form-input {
+    border: 1px solid #333;
+    border-radius: 50px;
+    }
+    .form-control:focus {
+    box-shadow: none;
+    /* border: none; */
+    }
+    .submit-btn {
+    background-color: skyblue;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px;
+    font-weight: 800;
+    color: #333;
+    }
+    .todo-list {
+    border-radius: 50px;
+    }
+    .todo-finished {
+    font-style: italic;
     text-decoration: line-through;
-}
+    }
+    .status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    }
+    .status-indicator-todo {
+    background: red;
+    }
+    .status-indicator-ongoing {
+    background: yellow;
+    }
+    .status-indicator-finished {
+    background: green;
+    }
+    .status-text {
+    font-weight: bold;
+    cursor: pointer;
+    }
+    .status-text-todo {
+    color: red;
+    }
+    .status-text-ongoing {
+    color: yellow;
+    }
+    .status-text-finished {
+    color: green;
+    }
+    .action-btn i {
+    font-size: 25px;
+    cursor: pointer;
+    }
 </style>
+

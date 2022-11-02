@@ -1,20 +1,21 @@
 /* eslint-disable vue/no-parsing-error */
 <template>
     <SideNavBar/>
-    <ToDoGoal/>
+    
     <ToDoList/>
     <LogOut/>
 </template>
 
 <script>
-import ToDoGoal from '@/components/ToDoGoal.vue';
+//import ToDoGoal from '@/components/ToDoGoal.vue';
 import ToDoList from '@/components/ToDoList.vue';
 import SideNavBar from '@/components/SideNavBar.vue';
 import LogOut from '@/components/LogOut.vue';
 
+
 export default {
     name: "TodoGoals",
-    components: { SideNavBar, LogOut, ToDoList, ToDoGoal },
+    components: { SideNavBar, LogOut, ToDoList },
 }
 </script>
 <style>
