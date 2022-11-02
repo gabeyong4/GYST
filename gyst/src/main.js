@@ -11,6 +11,7 @@ import "@fortawesome/fontawesome-free/js/all"
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 
+
 // Vue.use(BootstrapVue)
 
 // Vue.use(IconsPlugin)

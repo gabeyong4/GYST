@@ -5,6 +5,7 @@ import Budget from '@/views/BudgetPage.vue'
 import ToDoGoals from '@/views/ToDoGoals.vue'
 import Login from '@/views/LoginPage.vue'
 
+
 const routes = [
     {
         path: "/",
