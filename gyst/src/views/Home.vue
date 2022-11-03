@@ -4,6 +4,16 @@
     <router-view></router-view>
   </div>
   <LogOut/>
+  <h1>Welcome to GYST</h1><br><br><br>
+
+  <div id="budgetDash">
+    <h2>This is the container for budget</h2><br><br><br>
+  </div>
+
+  <div id="todo">
+    <h2>This is the container for to-do</h2>
+  </div>
+
 </template>
 
 <script>
