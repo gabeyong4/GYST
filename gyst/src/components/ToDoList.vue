@@ -1,6 +1,6 @@
 /* eslint-disable vue/no-unused-components */
 <template>
-  <div class="container position-r-0 shadow-lg px-5 py-5 rounded-3">
+  <div class="container position-l-3 shadow-lg px-5 py-5 rounded-3">
     <h1 class="mb-5">To Do List</h1>
 
     <div class="d-flex mb-5">
