@@ -20,6 +20,7 @@
 import SideNavBar from '@/components/SideNavBar.vue';
 import { sidebarWidth } from '@/components/state';
 
+
 export default {
   name: 'App',
   
