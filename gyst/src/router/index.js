@@ -18,11 +18,6 @@ const routes = [
         component: Home
     },
     {
-        path: '/about',
-        name: 'About',
-        component: About
-    },
-    {
         path: '/budget',
         name: 'Budget',
         component: Budget
@@ -31,6 +26,11 @@ const routes = [
         path: '/todogoals',
         name: 'ToDoGoals',
         component: ToDoGoals
+    },
+    {
+        path: '/about',
+        name: 'About',
+        component: About
     },
 ]
 

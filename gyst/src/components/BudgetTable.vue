@@ -212,9 +212,10 @@
 <style>
 
 .table {
-    float: right;
-    margin: 0 1.5%;
-    width: 73%;
+    /* float: right; */
+    /* margin: 0 1.5%; */
+    /* width: 100%;
+    overflow: hidden; */
 }
 
 /* .ag-root-wrapper ag-layout-normal ag-ltr {
@@ -226,7 +227,7 @@
 .ag-theme-alpine {
     float: right;
     margin: 0 1.5%;
-    width: 73%;
+    width: 85%;
     height: 500px;
 }
 
@@ -236,7 +237,7 @@
 }
 
 #addnewRows {
-    float: right;
+    /* float: right; */
     margin: 0 59.5%;
     width: 15%;
     background: #2178C0;
@@ -257,7 +258,7 @@
     text-align: center;
     text-decoration: none;
     touch-action: manipulation;
-    vertical-align: baseline;
+    vertical-align:baseline;
     white-space: nowrap;
 }
 

@@ -49,7 +49,7 @@ export default {
     margin-bottom: 50px;
 }
 #pagecontent{
-    height: 100px;
+    height: 100%;
     font-size: larger;
     font-weight: bolder;
     text-align: center;
@@ -72,5 +72,6 @@ h5{
 
 #bg{
     background-color: #2178C0;
+    height: 100%;
 }
 </style>

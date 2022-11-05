@@ -128,6 +128,9 @@ export default {
 </script>
 
 <style scoped>
+    .container {
+      width: 100%;
+    }
     .form-input {
     border: 1px solid #333;
     border-radius: 50px;

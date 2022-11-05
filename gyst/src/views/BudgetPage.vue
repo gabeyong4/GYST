@@ -21,15 +21,15 @@ export default {
 <style>
 
 .header {
-  float: right;
   margin: 0 1.5%;
   width: 73%;
 }
 
 #table {
-  float: right;
+  /* float: right; */
   margin: 0 1.5%;
   width: 73%;
+  top: 0;
 }
 
 </style>
