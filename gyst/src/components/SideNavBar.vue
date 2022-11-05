@@ -63,8 +63,8 @@ export default {
 <style>
 :root {
   --sidebar-bg-color: #267FCA;
-  --sidebar-item-hover: #4291d1;
-  --sidebar-item-active: #4291d1;
+  --sidebar-item-hover: white;
+  --sidebar-item-active: white;
 }
 
 
@@ -79,7 +79,8 @@ export default {
   background-color: var(--sidebar-bg-color);
   float: left;
   width: 0 1.5%;
-  position: fixed;
+  position: sticky;
+  height: 100%;
   z-index: 1;
   top: 0;
   left: 0;
@@ -92,7 +93,7 @@ export default {
 
 .sidebar span:hover {
       font-weight: bold;
-      color: #2c3e50;
+      color: white;
 }
 
 /* .collapse-icon {
