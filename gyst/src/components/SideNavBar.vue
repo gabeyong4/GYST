@@ -8,11 +8,11 @@
       <img id="logo" src="@/assets/gyst_logo.png" alt="" class="center">
     </span>
     </h3>
-    <br>
-    <SideBarLink to="/home" icon="fa-solid fa-house-user"> Home </SideBarLink>
-    <SideBarLink to="/about" icon="fa-regular fa-page"> About </SideBarLink>
-    <SideBarLink to="/budget" icon = "fa-solid fa-dollar-sign"> Budget Tracking </SideBarLink>
-    <SideBarLink to="/todogoals" icon = "fa-solid fa-list-check"> To-do Goals</SideBarLink>
+    <br> <br> <br>
+    <SideBarLink to="/home" icon="fa-solid fa-house-user">  Home </SideBarLink>
+    <SideBarLink to="/about" icon="fa-regular fa-page">  About </SideBarLink>
+    <SideBarLink to="/budget" icon = "fa-solid fa-dollar-sign">  Budget Tracking </SideBarLink>
+    <SideBarLink to="/todogoals" icon = "fa-solid fa-list-check">  To-do Goals</SideBarLink>
     <LogOut icon="fa fa-sign-out"> </LogOut>
     <!-- <span 
       class = "collapse-icon" 
@@ -116,10 +116,10 @@ a {
 
 #logo {
   position: absolute;
-  width: 57px;
-  height: 43px;
-  left: 7px;
-  top: 6px;
+  width: 100px;
+  height: 86px;
+  left: 5px;
+  top: 0px;
   user-select: none;
   margin: 0.1em 0;
 }

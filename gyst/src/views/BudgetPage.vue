@@ -1,8 +1,5 @@
 <template>
   <SideNavBar/>
-  <div class="header">
-    <h1>This is the Budget Page</h1>
-  </div>
   <BudgetTable/>
   
   

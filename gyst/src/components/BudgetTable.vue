@@ -211,12 +211,12 @@
   
 <style>
 
-.table {
+/* .table { */
     /* float: right; */
     /* margin: 0 1.5%; */
     /* width: 100%;
     overflow: hidden; */
-}
+/* } */
 
 /* .ag-root-wrapper ag-layout-normal ag-ltr {
     float: right;
