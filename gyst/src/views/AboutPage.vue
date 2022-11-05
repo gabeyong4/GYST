@@ -5,6 +5,7 @@
     <p>Hello Everyone! We are a group of students that wish to help other students track their expenses and task-completion!</p>
   </div>
 
+  <br>
   <h2 style="text-align:center">Our Team</h2>
   <div class="row1">
     <div class="column1">
@@ -62,16 +63,16 @@
     </div>
   </div>
 
-  <LogOut/> <br><br>
+  <br><br>
   
 </template>
 
 <script>
 import SideNavBar from '@/components/SideNavBar.vue';
-import LogOut from '@/components/LogOut.vue';
+
 export default {
     name: "AboutPage",
-    components: { SideNavBar, LogOut }
+    components: { SideNavBar}
 }
 </script>
 
@@ -118,7 +119,7 @@ export default {
   }
 
   .about-section {
-    padding: 50px;
+    padding: 20px;
     text-align: center;
     background-color: #474e5d;
     color: white;

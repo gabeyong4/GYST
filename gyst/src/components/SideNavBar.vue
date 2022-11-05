@@ -10,9 +10,10 @@
     </h3>
     <br> <br> <br>
     <SideBarLink to="/home" icon="fa-solid fa-house-user">  Home </SideBarLink>
-    <SideBarLink to="/about" icon="fa-regular fa-page">  About </SideBarLink>
     <SideBarLink to="/budget" icon = "fa-solid fa-dollar-sign">  Budget Tracking </SideBarLink>
     <SideBarLink to="/todogoals" icon = "fa-solid fa-list-check">  To-do Goals</SideBarLink>
+    <SideBarLink to="/profile" icon = "fa-solid fa-user-secret"> Profile</SideBarLink>
+    <SideBarLink to="/about" icon="fa-regular fa-page">  About </SideBarLink>
     <LogOut icon="fa fa-sign-out"> </LogOut>
     <!-- <span 
       class = "collapse-icon" 

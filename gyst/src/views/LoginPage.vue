@@ -2,11 +2,12 @@
     <section class="container">
         <article>
             <div class="left-half">
+                <br><br><br><br><br>
                 <img id="logo" src="@/assets/gyst_logo2.png" alt="" >
-                <div id="pagecontent">
+                <!-- <div id="pagecontent">
                     Welcome to GYST! Your one stop platform to track your expenses, to do lists, and much more!
                     Join now to discover a better you :)
-                </div>
+                </div> -->
             </div>
         </article>
         <div class="right-half ">
@@ -81,7 +82,6 @@ article {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  padding: 20px;
 }
 
 h1 {
@@ -104,7 +104,6 @@ h1 {
   background-image: url('@/assets/studying2.png');
   background-size: 140% 100%;
   min-height: 100vh;
-
 }
 
 .right-half {
@@ -131,7 +130,7 @@ h1 {
     /* display: block; */
     /* margin-left: auto; */
     /* margin-right: auto; */
-    width: 70%;
+    width: 80%;
 }
 h5{
     text-align: center;

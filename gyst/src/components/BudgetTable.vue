@@ -1,6 +1,10 @@
 <template>
+    <div class="TopBar">
+        <h1>Budget Tracking</h1>
+    </div>
     <AgGridVue/>
-    <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button>
+    <br>
+    <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button> <br><br>
     <!-- <button non="deselectRows">deselect rows</button> -->
     <ag-grid-vue
     class="ag-theme-alpine"
@@ -210,13 +214,19 @@
 </script>
   
 <style>
+.TopBar {
+    padding: 20px;
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+  }
 
-/* .table { */
+.table {
     /* float: right; */
-    /* margin: 0 1.5%; */
-    /* width: 100%;
-    overflow: hidden; */
-/* } */
+    margin: 0 1.5%;
+    width: 100%;
+    overflow: hidden;
+}
 
 /* .ag-root-wrapper ag-layout-normal ag-ltr {
     float: right;
@@ -225,20 +235,20 @@
 } */
 
 .ag-theme-alpine {
-    float: right;
-    margin: 0 1.5%;
-    width: 85%;
+    /* float: ; */
+    /* margin: 1.5%; */
+    width: auto;
     height: 500px;
 }
 
 .ag-header {
-    text-align:left
+    text-align:center
 
 }
 
 #addnewRows {
-    /* float: right; */
-    margin: 0 59.5%;
+    float: left;
+    /* margin: 0 59.5%; */
     width: 15%;
     background: #2178C0;
     background-color: #0095ff;
