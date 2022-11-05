@@ -28,6 +28,8 @@
     "vue-editortable": "^1.1.5",
     "vue-progress-circle": "^1.1.2",
     "vue-router": "^4.1.5",
+    "vue-split-pane": "^0.0.8",
+    "vue-splitpane": "^1.0.6",
     "vuex": "^4.1.0"
   },
   "devDependencies": {

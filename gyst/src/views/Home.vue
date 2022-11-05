@@ -3,7 +3,7 @@
   <div :style="{ 'margin-left' : sidebarWidth}">
     <router-view></router-view>
   </div>
-  <LogOut/>
+  <br>
   <h1>Welcome to GYST</h1><br><br><br>
 
   <div id="budgetDash">
