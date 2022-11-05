@@ -4,6 +4,7 @@ import About from '@/views/AboutPage.vue'
 import Budget from '@/views/BudgetPage.vue'
 import ToDoGoals from '@/views/ToDoGoals.vue'
 import Login from '@/views/LoginPage.vue'
+import Profile from '@/views/ProfilePage.vue'
 
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
         path: '/todogoals',
         name: 'ToDoGoals',
         component: ToDoGoals
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        component: Profile
     },
     {
         path: '/about',

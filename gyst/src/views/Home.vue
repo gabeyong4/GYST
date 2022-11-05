@@ -1,10 +1,9 @@
 <template>
   <SideNavBar />
-  <div :style="{ 'margin-left' : sidebarWidth}">
+  <!-- <div :style="{ 'margin-left' : sidebarWidth}">
     <router-view></router-view>
-  </div>
-  <br>
-  <h1>Welcome to GYST</h1><br><br><br>
+  </div> -->
+  <h1 class="TopBar">Welcome to GYST</h1><br><br><br>
 
   <div id="budgetDash">
     <h2>This is the container for budget</h2><br><br><br>
@@ -37,6 +36,11 @@ export default {
 </script>
 
 <style>
-
+.TopBar {
+    /* padding: 20px; */
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+  }
 
 </style>
