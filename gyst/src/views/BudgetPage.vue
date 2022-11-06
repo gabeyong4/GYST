@@ -19,7 +19,7 @@ export default {
 
 .header {
   margin: 0 1.5%;
-  width: 73%;
+  width: 100%;
 }
 
 #table {
