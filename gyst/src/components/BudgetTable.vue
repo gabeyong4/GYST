@@ -11,7 +11,7 @@
     :columnDefs = "columnDefs"
     :rowData = "rowData"
     @cell-value-changed = "save"
-    >
+    embedFullWidthRows: true>
     </ag-grid-vue>
 </template>
   
@@ -24,6 +24,8 @@
   import {getFirestore} from "firebase/firestore";
   import {addDoc, collection, getDocs, query, getCountFromServer, where, setDoc, doc} from "firebase/firestore"; // , doc, deleteDoc, setDoc
   import { getAuth } from "@firebase/auth";
+//   import FullWidthCellRenderer from './fullWidthCellRendererVue.js';
+
 
 // const auth = getAuth()
 // this.fbuser = auth.currentUser.email
@@ -215,7 +217,6 @@
   
 <style>
 .TopBar {
-    padding: 20px;
     text-align: center;
     background-color: #474e5d;
     color: white;
@@ -223,7 +224,7 @@
 
 .table {
     /* float: right; */
-    margin: 0 1.5%;
+    margin:150;
     width: 100%;
     overflow: hidden;
 }
@@ -249,7 +250,7 @@
 #addnewRows {
     float: left;
     /* margin: 0 59.5%; */
-    width: 15%;
+    width: 20%;
     background: #2178C0;
     background-color: #0095ff;
     border: 1px solid transparent;
@@ -284,5 +285,6 @@
 #addnewRows:active {
   background-color: #0064bd;
   box-shadow: none;
+  width: 100%;
 }
 </style>
