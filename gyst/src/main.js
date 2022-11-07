@@ -1,4 +1,4 @@
-import { createApp} from 'vue' // Put Vue if needed
+import { createApp, getCurrentInstance} from 'vue' // Put Vue if needed
 import { createStore } from 'vuex'
 import App from './App.vue'
 import router from './router/index.js'
@@ -22,6 +22,14 @@ const app = createApp(App)
 // .component("font-awesome-icon", FontAwesomeIcon)
 // .mount("#app")
 
+const methodThatForcesUpdate = () => {
+    // ...
+    const instance = getCurrentInstance();
+    instance.proxy.forceUpdate();
+    // ...
+};
+
+export default methodThatForcesUpdate
 
 // Create a store for our to do list items
 const store = createStore({
@@ -133,4 +141,6 @@ store.subscribe((_mutation, state) => {
 	localStorage.setItem('store', JSON.stringify(state));
 })
 
-app.use(router).use(store).use(VueChartKick).mount('#app')
+
+
+app.use(router).use(store).use(VueChartkick).mount('#app')
