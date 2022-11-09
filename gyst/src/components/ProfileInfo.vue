@@ -11,8 +11,8 @@
                         <div class="widget-user-image">
                             <img 
                             class="rounded-circle" 
-                            height="auto" 
-                            width="65" 
+                            height="80px" 
+                            width="auto" 
                             src="@/assets/gabriel.png" 
                             alt="@/assets/gyst_logo.png">
                         </div>
