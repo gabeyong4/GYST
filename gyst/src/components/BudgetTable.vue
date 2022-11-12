@@ -1,13 +1,17 @@
 <template>
+    <div class="TopBar">
+        <h1>Budget Tracking</h1>
+    </div>
     <AgGridVue/>
-    <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button>
+    <br>
+    <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button> <br><br>
     <!-- <button non="deselectRows">deselect rows</button> -->
     <ag-grid-vue
     class="ag-theme-alpine"
     :columnDefs = "columnDefs"
     :rowData = "rowData"
     @cell-value-changed = "save"
-    >
+    embedFullWidthRows: true>
     </ag-grid-vue>
 </template>
   
@@ -20,6 +24,8 @@
   import {getFirestore} from "firebase/firestore";
   import {addDoc, collection, getDocs, query, getCountFromServer, where, setDoc, doc} from "firebase/firestore"; // , doc, deleteDoc, setDoc
   import { getAuth } from "@firebase/auth";
+//   import FullWidthCellRenderer from './fullWidthCellRendererVue.js';
+
 
 // const auth = getAuth()
 // this.fbuser = auth.currentUser.email
@@ -210,11 +216,17 @@
 </script>
   
 <style>
+.TopBar {
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+  }
 
 .table {
-    float: right;
-    margin: 0 1.5%;
-    width: 73%;
+    /* float: right; */
+    margin:150;
+    width: 100%;
+    overflow: hidden;
 }
 
 /* .ag-root-wrapper ag-layout-normal ag-ltr {
@@ -224,21 +236,21 @@
 } */
 
 .ag-theme-alpine {
-    float: right;
-    margin: 0 1.5%;
-    width: 73%;
+    /* float: ; */
+    /* margin: 1.5%; */
+    width: auto;
     height: 500px;
 }
 
 .ag-header {
-    text-align:left
+    text-align:center
 
 }
 
 #addnewRows {
-    float: right;
-    margin: 0 59.5%;
-    width: 15%;
+    float: left;
+    /* margin: 0 59.5%; */
+    width: 20%;
     background: #2178C0;
     background-color: #0095ff;
     border: 1px solid transparent;
@@ -257,7 +269,7 @@
     text-align: center;
     text-decoration: none;
     touch-action: manipulation;
-    vertical-align: baseline;
+    vertical-align:baseline;
     white-space: nowrap;
 }
 
@@ -273,5 +285,6 @@
 #addnewRows:active {
   background-color: #0064bd;
   box-shadow: none;
+  width: 100%;
 }
 </style>
