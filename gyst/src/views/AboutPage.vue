@@ -4,7 +4,7 @@
     <h1>About Us</h1>
     <p>Hello Everyone! We are a group of students that wish to help other students track their expenses and task-completion!</p>
   </div>
-
+ 
   <br>
   <h2 style="text-align:center">Our Team</h2>
   <div class="row1">
@@ -116,6 +116,8 @@ export default {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: 8px;
     width: 80%;
+    color: white;
+    background-color: #000;
   }
 
   .about-section {
@@ -133,10 +135,6 @@ export default {
     content: "";
     clear: both;
     display: table;
-  }
-
-  .title {
-    color: grey;
   }
 
   .button {
@@ -167,7 +165,7 @@ export default {
     margin-left: auto;
     margin-right: auto;
     width: 40%;
-  }
+  } 
 
 
 </style>
