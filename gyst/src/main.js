@@ -6,7 +6,7 @@ import router from './router/index.js';
 import { BootstrapIconsPlugin } from 'bootstrap-icons-vue';
 import "bootstrap/dist/css/bootstrap.min.css";
 // eslint-disable-next-line no-unused-vars
-import VueEditortable from "vue-editortable"
+// import VueEditortable from "vue-editortable"
 
 import "@fortawesome/fontawesome-free/js/all"
 
@@ -15,7 +15,7 @@ import "@fortawesome/fontawesome-free/js/all"
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 createApp(App).use(router).use(BootstrapIconsPlugin).mount('#app')
 
-import VueChartkick from 'vue-chartkick'
+// import VueChartkick from 'vue-chartkick'
 import 'chartkick/chart.js'
 
 // Vue.use(BootstrapVue)
@@ -26,14 +26,14 @@ import 'chartkick/chart.js'
 // .component("font-awesome-icon", FontAwesomeIcon)
 // .mount("#app")
 
-const methodThatForcesUpdate = () => {
-    // ...
-    const instance = getCurrentInstance();
-    instance.proxy.forceUpdate();
-    // ...
-};
+// const methodThatForcesUpdate = () => {
+//     // ...
+//     const instance = getCurrentInstance();
+//     instance.proxy.forceUpdate();
+//     // ...
+// };
 
-export default methodThatForcesUpdate
+// export default methodThatForcesUpdate
 
 // Create a store for our to do list items
 /*const store = createStore({

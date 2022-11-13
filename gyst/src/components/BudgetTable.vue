@@ -203,14 +203,14 @@
     },
     
 
-    mounted() {
-        const auth = getAuth()
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                this.user = user
-            }
-        })
-    },
+    // mounted() {
+    //     const auth = getAuth()
+    //     onAuthStateChanged(auth, (user) => {
+    //         if (user) {
+    //             this.user = user
+    //         }
+    //     })
+    // },
 
     beforeMount() {
         // const gridApi = ref(null); // Optional - for accessing Grid's API
