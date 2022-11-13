@@ -8,11 +8,12 @@
       <img id="logo" src="@/assets/gyst_logo.png" alt="" class="center">
     </span>
     </h3>
-    <br>
-    <SideBarLink to="/home" icon="fa-solid fa-house-user"> Home </SideBarLink>
-    <SideBarLink to="/about" icon="fa-regular fa-page"> About </SideBarLink>
-    <SideBarLink to="/budget" icon = "fa-solid fa-dollar-sign"> Budget Tracking </SideBarLink>
-    <SideBarLink to="/todogoals" icon = "fa-solid fa-list-check"> To-do Goals</SideBarLink>
+    <br> <br> <br>
+    <SideBarLink to="/home" icon="fa-solid fa-house-user">  Home </SideBarLink>
+    <SideBarLink to="/budget" icon = "fa-solid fa-dollar-sign">  Budget Tracking </SideBarLink>
+    <SideBarLink to="/todogoals" icon = "fa-solid fa-list-check">  To-do Goals</SideBarLink>
+    <SideBarLink to="/profile" icon = "fa-solid fa-user-secret"> Profile</SideBarLink>
+    <SideBarLink to="/about" icon="fa-regular fa-page">  About </SideBarLink>
     <LogOut icon="fa fa-sign-out"> </LogOut>
     <!-- <span 
       class = "collapse-icon" 
@@ -63,8 +64,8 @@ export default {
 <style>
 :root {
   --sidebar-bg-color: #267FCA;
-  --sidebar-item-hover: #4291d1;
-  --sidebar-item-active: #4291d1;
+  --sidebar-item-hover: white;
+  --sidebar-item-active: white;
 }
 
 
@@ -79,7 +80,8 @@ export default {
   background-color: var(--sidebar-bg-color);
   float: left;
   width: 0 1.5%;
-  position: fixed;
+  position: sticky;
+  height: 100vh;
   z-index: 1;
   top: 0;
   left: 0;
@@ -92,7 +94,7 @@ export default {
 
 .sidebar span:hover {
       font-weight: bold;
-      color: #2c3e50;
+      color: white;
 }
 
 /* .collapse-icon {
@@ -115,10 +117,10 @@ a {
 
 #logo {
   position: absolute;
-  width: 57px;
-  height: 43px;
-  left: 7px;
-  top: 6px;
+  width: 100px;
+  height: 86px;
+  left: 5px;
+  top: 0px;
   user-select: none;
   margin: 0.1em 0;
 }

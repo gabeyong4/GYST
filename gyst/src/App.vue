@@ -9,16 +9,16 @@
 import "./styleguide.css"
 //import "../global.css"
 //import vueConfig from "vue.config";
-import { useStore } from 'vuex'
+//import { useStore } from 'vuex'
 
 
 
 export default {
   name:"App",
-	beforeCreate() {
+	/*beforeCreate() {
         const store = useStore()
 		store.commit('loadStore');
-	}
+	}*/
 };
 /*vueConfig.productionTip = false;
 // eslint-disable-next-line no-undef
@@ -37,6 +37,7 @@ console.log("in App")
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100vh;
 } 
 
 

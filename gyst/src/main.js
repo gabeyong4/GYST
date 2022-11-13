@@ -1,7 +1,10 @@
-import { createApp, getCurrentInstance} from 'vue' // Put Vue if needed
-import { createStore } from 'vuex'
-import App from './App.vue'
-import router from './router/index.js'
+// eslint-disable-next-line no-unused-vars
+import { createApp } from 'vue' // Put Vue if needed
+//import { createStore } from 'vuex'
+import App from './App.vue';
+import router from './router/index.js';
+import { BootstrapIconsPlugin } from 'bootstrap-icons-vue';
+import "bootstrap/dist/css/bootstrap.min.css";
 // eslint-disable-next-line no-unused-vars
 import VueEditortable from "vue-editortable"
 
@@ -10,6 +13,7 @@ import "@fortawesome/fontawesome-free/js/all"
 // import { BootstrapVue } from 'bootstrap-vue'
 // import "bootstrap/dist/css/bootstrap.css"
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
+createApp(App).use(router).use(BootstrapIconsPlugin).mount('#app')
 
 import VueChartkick from 'vue-chartkick'
 import 'chartkick/chart.js'
@@ -18,7 +22,7 @@ import 'chartkick/chart.js'
 
 // Vue.use(IconsPlugin)
 
-const app = createApp(App)
+//const app = createApp(App)
 // .component("font-awesome-icon", FontAwesomeIcon)
 // .mount("#app")
 
@@ -32,7 +36,7 @@ const methodThatForcesUpdate = () => {
 export default methodThatForcesUpdate
 
 // Create a store for our to do list items
-const store = createStore({
+/*const store = createStore({
     state () {
         return {
             todos: [
@@ -140,7 +144,5 @@ store.subscribe((_mutation, state) => {
     // their data will persist even if they refresh the page.
 	localStorage.setItem('store', JSON.stringify(state));
 })
-
-
-
-app.use(router).use(store).use(VueChartkick).mount('#app')
+*/
+//app.use(router).use(store).mount('#app')

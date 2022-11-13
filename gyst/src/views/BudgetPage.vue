@@ -1,8 +1,5 @@
 <template>
   <SideNavBar/>
-  <div class="header">
-    <h1>This is the Budget Page</h1>
-  </div>
   <BudgetTable/>
   
   
@@ -21,15 +18,15 @@ export default {
 <style>
 
 .header {
-  float: right;
   margin: 0 1.5%;
-  width: 73%;
+  width: 100%;
 }
 
 #table {
-  float: right;
+  /* float: right; */
   margin: 0 1.5%;
   width: 73%;
+  top: 0;
 }
 
 </style>
