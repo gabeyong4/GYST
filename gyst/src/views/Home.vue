@@ -43,7 +43,7 @@ export default {
     color: white;
   }
 
-  /* #app {
+  #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -75,6 +75,6 @@ li {
   justify-content: space-between;
   background-color: skyblue;
   padding: 10px;
-} */
+}
 
 </style>
