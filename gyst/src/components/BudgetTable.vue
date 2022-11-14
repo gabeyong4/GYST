@@ -14,6 +14,8 @@
     :rowData = "rowData"
     :rowSelection="rowSelection"
     @cell-value-changed = "save"
+    @selection-changed = "onSelectionChanged"
+    @row-selected = "onRowSelected"
     embedFullWidthRows: true>
     </ag-grid-vue>
 </template>
@@ -25,7 +27,7 @@
   import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
   import firebaseApp from "../firebase.js";
   import {getFirestore} from "firebase/firestore";
-  import {addDoc, collection, getDocs, query, getCountFromServer, where, setDoc, doc} from "firebase/firestore"; // , doc, deleteDoc, setDoc
+  import {deleteDoc, addDoc, collection, getDocs, query, getCountFromServer, where, setDoc, doc} from "firebase/firestore"; // , doc, deleteDoc, setDoc
   import { getAuth } from "@firebase/auth";
 //   import FullWidthCellRenderer from './fullWidthCellRendererVue.js';
 
@@ -63,7 +65,7 @@
             categories: ["Transport", "Food & Drinks", "Entertainment", "Clothes", "Vacation"],
             gridApi: null,
             rowSelection: null,
-            rowSelected: null, // the variable we want to make globally in order to use in deleteRow()
+            rowSelected: [], // the variable we want to make globally in order to use in deleteRow()
             user: false,
             componentKey: 0
         };
@@ -143,7 +145,7 @@
             const oldVal = event.oldValue
             const columnChanged = event.colDef.field
             console.log("old val: " + oldVal)
-            // console.log(event.colDef.field)
+            console.log(event.colDef.field)
             const currData = event.data
             console.log(typeof currData.amount)
             const auth = getAuth();
@@ -173,7 +175,7 @@
 
         async onRowSelected(event) {
             // store the data that is selected as a variable to use in the delete function
-            this.rowSelected = event.node
+            this.rowSelected.push(event.node.data)
             console.log(this.rowSelected)
             
             // event.node.forEach((x) => {
@@ -197,7 +199,23 @@
         },
 
         async deleteRow() {
-            console.log(this.rowSelected)
+            // console.log(this.rowSelected)
+            const auth = getAuth();
+            const user = auth.currentUser;
+            this.fbuser = String(user.email)
+            // const currData = this.rowSelected[0]
+            const taskSelected = this.rowSelected[0].tasks
+            // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
+            const q = query(collection(db, this.fbuser), where("tasks", "==", taskSelected));
+            const querySnapshot = await getDocs(q);
+            var currID;
+            querySnapshot.forEach((doc) => { // did not account for multiple queries here
+                currID = doc.id
+                console.log(doc.id, " => ", doc.data());
+            });
+
+            await deleteDoc(doc(db, this.fbuser, currID));
+
         }
 
     },
