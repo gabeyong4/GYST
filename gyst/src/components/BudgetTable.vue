@@ -4,7 +4,7 @@
     </div>
     <AgGridVue/>
     <br>
-    <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button> <br><br>
+    <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button>
     <button id="deleteRow" v-on:click = "deleteRow()">Remove Selected</button>
     <!-- <button non="deselectRows">deselect rows</button> -->
     <ag-grid-vue
@@ -15,8 +15,7 @@
     :rowSelection="rowSelection"
     @cell-value-changed = "save"
     @selection-changed = "onSelectionChanged"
-    @row-selected = "onRowSelected"
-    embedFullWidthRows: true>
+    @row-selected = "onRowSelected">
     </ag-grid-vue>
 </template>
   
@@ -27,8 +26,9 @@
   import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
   import firebaseApp from "../firebase.js";
   import {getFirestore} from "firebase/firestore";
-  import {deleteDoc, addDoc, collection, getDocs, query, getCountFromServer, where, setDoc, doc} from "firebase/firestore"; // , doc, deleteDoc, setDoc
-  import { getAuth } from "@firebase/auth";
+  import {deleteDoc, addDoc, collection, getDocs, query, getCountFromServer, where, doc, setDoc, updateDoc} from "firebase/firestore"; // , doc, deleteDoc, updateDoc
+  import { getAuth, onAuthStateChanged } from "@firebase/auth";
+//   import { nextTick } from 'vue';
 //   import FullWidthCellRenderer from './fullWidthCellRendererVue.js';
 
 
@@ -37,6 +37,7 @@
 //   const email = user.email
 
   const db = getFirestore(firebaseApp);
+//   const renderComponent = ref(true);
   /* eslint-disable no-unused-vars */
 //   const componentKey = ref(0)
   /* eslint-enable no-unused-vars */
@@ -67,7 +68,9 @@
             rowSelection: null,
             rowSelected: [], // the variable we want to make globally in order to use in deleteRow()
             user: false,
-            componentKey: 0
+            componentKey: 0,
+            // renderComponent: true,
+            count: 0,
         };
     },
 
@@ -97,6 +100,12 @@
         // // ...
         // },
 
+        // async forceRerender() {
+        //     this.renderComponent = false;
+        //     await nextTick();
+        //     this.renderComponent = true;
+        // },
+
         async getBudget() {
             // console.log(this.user.email)
             const auth = getAuth();
@@ -105,6 +114,7 @@
             // this.fbuser = String(this.user.email)
             const coll = collection(db, this.fbuser);
             const snapshot = await getCountFromServer(coll);
+            this.count = snapshot.data().count
             console.log('count: ', snapshot.data().count); // getting the count of documents
             let z = await getDocs(query(collection(db, String(this.fbuser))));
             z.forEach((doc) => {
@@ -117,15 +127,16 @@
             // console.log(this.user.email)
             this.fbuser = String(this.user.email)
             try {
+                this.count = this.count + 1
                 const newRow = await addDoc(collection(db, this.fbuser), {
+                    header: this.count,
                     tasks: "sample",
                     amount:0,
                     date:"sample",
-                    category:"sample",
+                    category:this.categories[0],
                     comments:"sample"
                 });
                 console.log(newRow)
-                // this.forceRerender()
                 // this.methodThatForcesUpdate()
                 // this.forceRerender()
                 // alert("refresh")
@@ -142,9 +153,9 @@
         },
 
         async save(event) {
-            const oldVal = event.oldValue
-            const columnChanged = event.colDef.field
-            console.log("old val: " + oldVal)
+            // const oldVal = event.oldValue
+            // const columnChanged = event.colDef.field
+            // console.log("old val: " + oldVal)
             console.log(event.colDef.field)
             const currData = event.data
             console.log(typeof currData.amount)
@@ -152,8 +163,9 @@
             const user = auth.currentUser;
             this.fbuser = String(user.email)
             // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
-            const q = query(collection(db, this.fbuser), where(columnChanged, "==", oldVal));
+            const q = query(collection(db, this.fbuser), where("header", "==", currData.header));
             const querySnapshot = await getDocs(q);
+            console.log(querySnapshot)
             var currID;
             querySnapshot.forEach((doc) => { // did not account for multiple queries here
                 currID = doc.id
@@ -161,6 +173,7 @@
             });
 
             await setDoc(doc(db, this.fbuser, currID), {
+                header: currData.header,
                 tasks: currData.tasks,
                 amount:Number(currData.amount),
                 date:currData.date,
@@ -177,36 +190,49 @@
             // store the data that is selected as a variable to use in the delete function
             this.rowSelected.push(event.node.data)
             console.log(this.rowSelected)
-            
-            // event.node.forEach((x) => {
-            //     console.log(x)
-            //     // this.rowData.push(doc.data())
-            // })
-    
-            // var counter = 0
-            // if (event.node.isSelected() && counter == 0) {
-            //     counter++
-            // }
-
-            // console.log(event.node.isSelected())
-
-            // window.alert(
-            //     'row ' +
-            //     event.node.data.tasks +
-            //     ' selected = ' +
-            //     event.node.isSelected()
-            // );
         },
 
+        // async resetDoc(doc, counter) {
+        //     await updateDoc(doc, {
+        //         "header": counter,
+        //     });
+        // },
+
+        // async resetIndex() {
+        //     const auth = getAuth();
+        //     const user = auth.currentUser;
+        //     this.fbuser = String(user.email)
+        //     const querySnapshot = await getDocs(collection(db, this.fbuser));
+        //     var counter = 1
+        //     querySnapshot.forEach((doc) => {
+        //         this.resetDoc(doc, counter)
+        //         counter = counter + 1
+        //     // doc.data() is never undefined for query doc snapshots
+        //         console.log(counter)
+        //         console.log(doc.id, " => ", doc.data().header);
+        //     });
+
+        //     // await setDoc(doc(db, this.fbuser, currID), {
+        //     //     header: currData.header,
+        //     //     tasks: currData.tasks,
+        //     //     amount:Number(currData.amount),
+        //     //     date:currData.date,
+        //     //     category:currData.category,
+        //     //     comments:currData.comments
+        //     // });
+
+        // },
+
+        // after deletion we need to update the index of the rest of the elements
         async deleteRow() {
             // console.log(this.rowSelected)
             const auth = getAuth();
             const user = auth.currentUser;
             this.fbuser = String(user.email)
             // const currData = this.rowSelected[0]
-            const taskSelected = this.rowSelected[0].tasks
+            const headSelected = this.rowSelected[0].header
             // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
-            const q = query(collection(db, this.fbuser), where("tasks", "==", taskSelected));
+            const q = query(collection(db, this.fbuser), where("header", "==", headSelected));
             const querySnapshot = await getDocs(q);
             var currID;
             querySnapshot.forEach((doc) => { // did not account for multiple queries here
@@ -215,20 +241,60 @@
             });
 
             await deleteDoc(doc(db, this.fbuser, currID));
+            const allDocs = await getDocs(collection(db, this.fbuser));
+            var lst = []
+            allDocs.forEach((doc) => {
+                lst.push([doc.id, doc.data()])
+            //     this.resetDoc(doc, counter)
+            //     counter = counter + 1
+            // // doc.data() is never undefined for query doc snapshots
+            //     console.log(counter)
+                console.log(doc.id, " => ", doc.data().header);
+            });
+            console.log(lst)
+            console.log(lst.length)
+
+            for (let index = 0; index < lst.length; index++) {
+                const data = lst[index]
+                const userDocRef = doc(db, this.fbuser, data[0]);
+                // const docSnap = await getDoc(userDocRef)
+                await updateDoc(userDocRef, {
+                    "header": index+1,
+                });
+                // console.log(numFruit)
+            }
+
+
+
+
+
+            // const coll = collection(db, this.fbuser);
+            // const snapshot = await getCountFromServer(coll);
+            // this.count = snapshot.data().count
+            // this.resetIndex()
+            // const querySnapshot = await getDocs(collection(db, this.fbuser));
+            // var counter = 1
+            // querySnapshot.forEach((doc) => {
+            //     this.resetDoc(doc, counter)
+            //     counter = counter + 1
+            // // doc.data() is never undefined for query doc snapshots
+            //     console.log(counter)
+            //     console.log(doc.id, " => ", doc.data().header);
+            // });
 
         }
 
     },
     
 
-    // mounted() {
-    //     const auth = getAuth()
-    //     onAuthStateChanged(auth, (user) => {
-    //         if (user) {
-    //             this.user = user
-    //         }
-    //     })
-    // },
+    mounted() {
+        const auth = getAuth()
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                this.user = user
+            }
+        })
+    },
 
     beforeMount() {
         // const gridApi = ref(null); // Optional - for accessing Grid's API
@@ -242,7 +308,8 @@
 
         // Each Column Definition results in one Column.
         this.columnDefs = [
-            {headerName:"Task Details" , field:"tasks", editable: true, sortable: true, filter: true, checkboxSelection: true},
+            {headerName:"#" , field:"header", editable: false, sortable: true, checkboxSelection: true},
+            {headerName:"Task Details" , field:"tasks", editable: true, sortable: true, filter: true},
             {headerName:"Amount" , field:"amount", editable: true, sortable: true, filter: true, type: "numberColumn"},
             {headerName:"Date" , field:"date", editable: true, sortable: true, filter: true},
             {headerName:"Category" , field:"category", cellEditorParams: {values : this.categories }, editable: true, sortable: true, filter: true, cellEditor: "agSelectCellEditor"},
@@ -261,33 +328,6 @@
     //         }
     //     })
     // }
-
-        // DefaultColDef sets props common to all Columns
-        // const defaultColDef = {
-        //     sortable: true,
-        //     filter: true,
-        //     flex: 1
-        // };
-
-        // Example load data from sever
-        // onMounted(() => {
-        //     fetch("https://www.ag-grid.com/example-assets/row-data.json")
-        //     .then((result) => result.json())
-        //     .then((remoteRowData) => (rowData.value = remoteRowData));
-        // });
-
-        // return {
-        //     // onGridReady,
-        //     columnDefs,
-        //     rowData,
-        //     defaultColDef,
-        //     cellWasClicked: (event) => { // Example of consuming Grid Event
-        //     console.log("cell was clicked", event);
-        //     }
-        //     // deselectRows: () =>{
-        //     // gridApi.value.deselectAll()
-        //     // }
-        // }
 }
 
 </script>
@@ -313,7 +353,6 @@
 } */
 
 .ag-theme-alpine {
-    /* float: ; */
     /* margin: 1.5%; */
     width: auto;
     height: 500px;
