@@ -43,7 +43,7 @@ auth.onAuthStateChanged(() => {
 
 // console.log(store)
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
-createApp(App).use(router).use(BootstrapIconsPlugin).mount('#app')
+// createApp(App).use(router).use(BootstrapIconsPlugin).mount('#app')
 
 // import VueChartkick from 'vue-chartkick'
 import 'chartkick/chart.js'
