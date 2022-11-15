@@ -3,9 +3,6 @@
         <h1>Budget Tracking</h1>
     </div>
     <AgGridVue/>
-    <br>
-    <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button>
-    <button id="deleteRow" v-on:click = "deleteRow()">Remove Selected</button>
     <!-- <button non="deselectRows">deselect rows</button> -->
     <ag-grid-vue
     :key="componentKey"
@@ -17,6 +14,8 @@
     @selection-changed = "onSelectionChanged"
     @row-selected = "onRowSelected">
     </ag-grid-vue>
+    <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button>
+    <button id="deleteRow" v-on:click = "deleteRow()">Remove Selected</button>
 </template>
   
 <script>
@@ -322,6 +321,8 @@
     text-align: center;
     background-color: #474e5d;
     color: white;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.170509);
+    margin: 5px;
   }
 
 .table {
@@ -340,20 +341,20 @@
 .ag-theme-alpine {
     /* margin: 1.5%; */
     width: auto;
-    height: 500px;
+    height: 400px;
 }
 
-.ag-header {
-    text-align:center
-
+.ag-header-cell-label {
+   justify-content: center;
 }
+
 
 #addnewRows {
-    float: left;
-    /* margin: 0 59.5%; */
-    width: 20%;
-    background: #2178C0;
-    background-color: #0095ff;
+    float: right;
+    margin: 2px;
+    width: 10%;
+    background: #97C1A9;
+    background-color: #97C1A9;
     border: 1px solid transparent;
     border-radius: 3px;
     box-shadow: rgb(255 255 255 / 40%) 0 1px 0 0 inset;
@@ -372,11 +373,12 @@
     touch-action: manipulation;
     vertical-align:baseline;
     white-space: nowrap;
+    border: 2px solid black;
 }
 
 #addnewRows:hover,
 #addnewRows:focus {
-  background-color: #07c;
+  background-color: rgb(27, 138, 75);
 }
 
 #addnewRows:focus {
@@ -384,16 +386,16 @@
 }
 
 #addnewRows:active {
-  background-color: #0064bd;
+  background-color: rgb(27, 138, 75);
   box-shadow: none;
 }
 
 #deleteRow {
     float: right;
-    margin: 0 59.5%;
-    width: 15%;
-    background: #2178C0;
-    background-color: #0095ff;
+    margin: 2px;
+    width: 0 25%;
+    background: #97C1A9;
+    background-color: #97C1A9;
     border: 1px solid transparent;
     border-radius: 3px;
     box-shadow: rgb(255 255 255 / 40%) 0 1px 0 0 inset;
@@ -412,11 +414,12 @@
     touch-action: manipulation;
     vertical-align: baseline;
     white-space: nowrap;
+    border: 2px solid black;
 }
 
 #deleteRow:hover,
 #deleteRow:focus {
-  background-color: #07c;
+  background-color: rgb(27, 138, 75);
 }
 
 #deleteRow:focus {
@@ -424,7 +427,7 @@
 }
 
 #deleteRow:active {
-  background-color: #0064bd;
+  background-color: rgb(27, 138, 75);
   box-shadow: none;
 }
 </style>
