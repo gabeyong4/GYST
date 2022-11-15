@@ -28,6 +28,7 @@
   import {getFirestore} from "firebase/firestore";
   import {deleteDoc, addDoc, collection, getDocs, query, getCountFromServer, where, doc, setDoc, updateDoc} from "firebase/firestore"; // , doc, deleteDoc, updateDoc
   import { getAuth, onAuthStateChanged } from "@firebase/auth";
+//   import store from "../store.js"
 //   import { nextTick } from 'vue';
 //   import FullWidthCellRenderer from './fullWidthCellRendererVue.js';
 
@@ -70,7 +71,8 @@
             user: false,
             componentKey: 0,
             // renderComponent: true,
-            count: 0,
+            count: 0
+            // fbuser: ""
         };
     },
 
@@ -85,26 +87,6 @@
     },
 
     methods: {
-        // async getEmail() {
-        //     const auth = getAuth();
-        //     const user = auth.currentUser;
-        //     const email = user.email
-        // },
-        // forceRerender() {
-        //     this.componentKey += 1
-        // },
-
-        // methodThatForcesUpdate() {
-        // // ...
-        //     this.$forceUpdate();  // Notice we have to use a $ here
-        // // ...
-        // },
-
-        // async forceRerender() {
-        //     this.renderComponent = false;
-        //     await nextTick();
-        //     this.renderComponent = true;
-        // },
 
         async getBudget() {
             // console.log(this.user.email)
@@ -142,7 +124,7 @@
                 // alert("refresh")
                 // console.log(this.componentKey)
                 // this.$router.go()
-                // window.location.reload()
+                window.location.reload()
                 // this.$emit("added")
             }
 
@@ -263,6 +245,8 @@
                 });
                 // console.log(numFruit)
             }
+            window.location.reload()
+
 
 
 
@@ -292,6 +276,7 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.user = user
+                this.store
             }
         })
     },

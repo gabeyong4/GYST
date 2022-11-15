@@ -1,21 +1,48 @@
 // eslint-disable-next-line no-unused-vars
-import { createApp } from 'vue' // Put Vue if needed
+import { createApp, Vue } from 'vue' // Put Vue if needed
+// import { getStore } from "vuex"
 //import { createStore } from 'vuex'
+// import store from "./store.js"
 import App from './App.vue';
 import router from './router/index.js';
 import { BootstrapIconsPlugin } from 'bootstrap-icons-vue';
 import "bootstrap/dist/css/bootstrap.min.css";
+// import createPersistedState from 'vuex-persistedstate'
+// import * as Cookies from 'js-cookie'
 // eslint-disable-next-line no-unused-vars
 // import VueEditortable from "vue-editortable"
-
+import {auth} from "./firebase"
 import "@fortawesome/fontawesome-free/js/all"
 
 // import { BootstrapVue } from 'bootstrap-vue'
 // import "bootstrap/dist/css/bootstrap.css"
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
-createApp(App).use(router).use(BootstrapIconsPlugin).mount('#app')
+// import 'bootstrap-vue/dist/bootstrap-vue.css'~
+
+let app
+auth.onAuthStateChanged(() => {
+    if (!app) {
+        createApp(App).use(router).use(BootstrapIconsPlugin).mount('#app')
+    }
+})
+
+
+// createApp(App).use(router).use(store).use(BootstrapIconsPlugin).mount('#app')
+
 // import VueChartkick from 'vue-chartkick'
-import 'chartkick/chart.js'
+// import 'chartkick/chart.js'
+
+// const store = new Store({
+//     // ...
+//     plugins: [
+//       createPersistedState({
+//         getState: (key) => Cookies.getJSON(key),
+//         setState: (key, state) => Cookies.set(key, state, { expires: 3, secure: true })
+//       })
+//     ]
+//   })
+
+// console.log(store)
+
 // Vue.use(BootstrapVue)
 
 // Vue.use(IconsPlugin)
