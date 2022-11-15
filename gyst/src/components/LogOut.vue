@@ -57,10 +57,13 @@ export default {
     font-weight: 400;
     user-select: none;
     margin: 0.1em 0;
-    padding: 0.4em;
-    border-radius: 0.25em;
-    height: 1.5em;
+    height: 1.8em;
     text-decoration: none;
+    background-color: rgb(244, 65, 65);
+    border-radius: 0.4em;
+}
+.btn:hover {
+    background-color: red;
 }
 
 </style>
