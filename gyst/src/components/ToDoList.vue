@@ -47,6 +47,17 @@
 
 <script>
 //import { BIcon, BIconArrowUp } from 'bootstrap-vue'
+import firebaseApp from "../firebase.js";
+  import {getFirestore} from "firebase/firestore";
+  import {addDoc, collection, getDocs, query, getCountFromServer, where, setDoc, doc, deleteDoc} from "firebase/firestore"; // , doc, deleteDoc, setDoc
+  import { getAuth } from "@firebase/auth";
+
+// const auth = getAuth()
+// this.fbuser = auth.currentUser.email
+//   const email = user.email
+
+  const db = getFirestore(firebaseApp);
+
 export default {
   name: "ToDo",
   data() {
@@ -56,20 +67,7 @@ export default {
       tempNameTodo: "",
       tempStatusTodo: "",
       todoStatus: ["to-do", "on-going", "finished"],
-      todos: [
-        {
-          name: "Exercise",
-          status: "to-do",
-        },
-        {
-          name: "BT3103 Midterm Project",
-          status: "finished",
-        },
-        {
-          name: "BT3103 Final Project",
-          status: "on-going",
-        },
-      ],
+      todos: [],
     };
   },
   /*components: {
@@ -77,33 +75,102 @@ export default {
       // eslint-disable-next-line vue/no-unused-components
       BIconArrowUp
     },*/
+    created() {
+        // this.createCollection()
+        this.getList();
+    },
   methods: {
-    addTodo() {
+    async getList() {
+            const auth = getAuth();
+            const user = auth.currentUser;
+            this.fbuser = String(user.email)
+            const coll = collection(db, this.fbuser);
+            const snapshot = await getCountFromServer(coll);
+            console.log('count: ', snapshot.data().count); // getting the count of documents
+            let z = await getDocs(query(collection(db, String(this.fbuser))));
+            z.forEach((doc) => {
+                console.log(doc)
+                this.todos.push({
+                  name: doc.data().name,
+                  status: doc.data().status
+                })
+            })
+        },
+    async addTodo() {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      this.fbuser = String(user.email)
       if (this.newTodo.length === 0) return;
       if (this.indexEditTodo === null) {
-        this.todos.push({
-          name: this.newTodo,
-          status: "to-do",
-        });
+        try {
+          const newRow = await addDoc(collection(db, this.fbuser), {
+            name: this.newTodo,
+            status: "to-do"
+          });
+          console.log(newRow)
+          alert("refresh")
+          window.location.reload()
+          this.$emit("added")
+        }
+        catch(error) {
+                console.error("Error adding document ", error)
+        }
       } else {
-        this.todos[this.indexEditTodo].name = this.newTodo;
+        await setDoc(doc(db, this.fbuser, this.todos[this.indexEditTodo].name), {
+          name: this.newTodo,
+          status: this.todos[this.indexEditTodo].status
+      });
         this.indexEditTodo = null;
       }
       this.newTodo = "";
     },
-    editTodo(index) {
-      this.newTodo = this.todos[index].name;
+
+    async editTodo(index) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      this.fbuser = String(user.email)
+      const oldVal = this.todos[index].name;
+      const q = query(collection(db, this.fbuser), where("name", "==", oldVal));
+      const querySnapshot = await getDocs(q);
+      var currID;
+      querySnapshot.forEach((doc) => { // did not account for multiple queries here
+          currID = doc.id
+          console.log(doc.id, " => ", doc.data());
+      });
+      await setDoc(doc(db, this.fbuser, currID), {
+          name: oldVal,
+          status: this.todos[index].status
+      });
       this.indexEditTodo = index;
     },
-    deleteTodo(index) {
+
+    async deleteTodo(index) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      this.fbuser = String(user.email)
+      const docRef = doc(db, this.fbuser, where("name", "==", this.todos[index].name)); 
+      await deleteDoc(docRef).then(() => { console.log("Entire Document has been deleted successfully.") }).catch(error => { console.log(error); })
       this.todos.splice(index, 1);
     },
-    changeStatus(index) {
+
+    async changeStatus(index) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      this.fbuser = String(user.email)
       let statusIndex = this.todoStatus.indexOf(this.todos[index].status);
-      if (++statusIndex > 2) statusIndex = 0;
+      if (++statusIndex > 2) {
+        statusIndex = 0;
+      }
       this.todos[index].status = this.todoStatus[statusIndex];
+      await setDoc(doc(db, this.fbuser, this.todos[index].name), {
+          name: this.todos[index].name,
+          status: statusIndex
+      });
     },
-    upTodo(index) {
+    async upTodo(index) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      this.fbuser = String(user.email)
       if (index === 0) return;
       this.tempNameTodo = this.todos[index].name;
       this.tempStatusTodo = this.todos[index].status;
@@ -112,7 +179,10 @@ export default {
       this.todos[index - 1].name = this.tempNameTodo;
       this.todos[index - 1].status = this.tempStatusTodo;
     },
-    downTodo(index) {
+    async downTodo(index) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      this.fbuser = String(user.email)
       if (index === this.todos.length - 1) return;
       this.tempNameTodo = this.todos[index].name;
       this.tempStatusTodo = this.todos[index].status;
