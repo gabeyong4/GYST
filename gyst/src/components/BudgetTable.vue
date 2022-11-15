@@ -91,7 +91,7 @@
             // console.log(this.user.email)
             const auth = getAuth();
             const user = auth.currentUser
-            this.fbuser = String(user.email)
+            this.fbuser = String(user.email) + " Budget Table"
             // this.fbuser = String(this.user.email)
             const coll = collection(db, this.fbuser);
             const snapshot = await getCountFromServer(coll);
@@ -106,7 +106,7 @@
 
         async addNewRow() {
             // console.log(this.user.email)
-            this.fbuser = String(this.user.email)
+            this.fbuser = String(this.user.email) + " Budget Table"
             try {
                 this.count = this.count + 1
                 const newRow = await addDoc(collection(db, this.fbuser), {
@@ -142,7 +142,7 @@
             console.log(typeof currData.amount)
             const auth = getAuth();
             const user = auth.currentUser;
-            this.fbuser = String(user.email)
+            this.fbuser = String(user.email) + " Budget Table"
             // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
             const q = query(collection(db, this.fbuser), where("header", "==", currData.header));
             const querySnapshot = await getDocs(q);
@@ -209,7 +209,7 @@
             // console.log(this.rowSelected)
             const auth = getAuth();
             const user = auth.currentUser;
-            this.fbuser = String(user.email)
+            this.fbuser = String(user.email) + " Budget Table"
             // const currData = this.rowSelected[0]
             const headSelected = this.rowSelected[0].header
             // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
@@ -275,7 +275,6 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.user = user
-                this.store
             }
         })
     },
