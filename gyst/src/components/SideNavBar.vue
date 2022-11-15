@@ -81,7 +81,7 @@ export default {
   float: left;
   width: 0 1.5%;
   position: sticky;
-  height: 100vh;
+  height: 100%;
   z-index: 1;
   top: 0;
   left: 0;
@@ -93,8 +93,8 @@ export default {
 }
 
 .sidebar span:hover {
-      font-weight: bold;
-      color: white;
+  font-weight: bold;
+  color: white;
 }
 
 /* .collapse-icon {
