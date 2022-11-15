@@ -1,5 +1,27 @@
 /* eslint-disable vue/no-unused-components */
 <template>
+  <h1 class="TopBar">To Do Goals</h1>
+  <div>
+  <b-card-group deck>
+    <b-card title="Wellness" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
+        <b-card-text>
+          This card has supporting text below as a natural lead-in to additional content.
+        </b-card-text>
+        <template #footer>
+          <small class="text-muted">Last updated 3 mins ago</small>
+        </template>
+    </b-card>
+    <b-card title="Others" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
+      <b-card-text>
+        This is a wider card with supporting text below as a natural lead-in to additional content.
+        This card has even longer content than the first to show that equal height action.
+      </b-card-text>
+      <template #footer>
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </template>
+    </b-card>
+  </b-card-group>
+  </div>
   <h1 class="TopBar">To Do List</h1>
   <div class="d-flex mb-5">
     <input v-model="newTodo" type="text" placeholder="Add a new item" class="form-control form-input me-3"/>
@@ -9,13 +31,14 @@
     <div class="col-7 text-start">
       <h5 :class="{ 'todo-finished': todo.status === 'finished' }">{{ todo.name }}</h5>
     </div>
-    <div class="col-2">
+    <div class="col">
       <div class="d-flex justify-content-start align-items-center">
         <div class="status-indicator mb-1 me-2" :class="{
             'status-indicator-todo': todo.status === 'to-do',
             'status-indicator-ongoing': todo.status === 'on-going',
             'status-indicator-finished': todo.status === 'finished',
-          }"></div>
+          }">
+        </div>
         <div class="status-text" @click="changeStatus(index)" :class="{
             'status-text-todo': todo.status === 'to-do',
             'status-text-ongoing': todo.status === 'on-going',
@@ -25,7 +48,24 @@
         </div>
       </div>
     </div>
-    <div class="col-3 text-end action-btn">
+    <div class= "col">
+      <div class="d-flex justify-content-start align-items-center">
+        <div class="tag-indicator mb-1 me-2" :class="{
+            'tag-indicator-school': todo.tag === 'School',
+            'tag-indicator-wellness': todo.tag === 'Wellness',
+            'tag-indicator-others': todo.tag === 'Others',
+          }">
+        </div>
+        <div class="tag-text" @click="changeTag(index)" :class="{
+            'tag-text-school': todo.tag === 'School',
+            'tag-text-wellness': todo.tag === 'Wellness',
+            'tag-text-others': todo.tag === 'Others',
+          }">
+          <h5>{{ todo.tag }}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col text-end action-btn">
       <div class="d-flex justify-content-end">
         <div class="" @click="upTodo(index)">
           <i class="fas fa-arrow-up ml-4 mx-2"></i>
@@ -66,6 +106,7 @@ export default {
       tempNameTodo: "",
       tempStatusTodo: "",
       todoStatus: ["to-do", "on-going", "finished"],
+      todoTag: ["School", "Wellness", "Others"],
       todos: [],
     };
   },
@@ -91,7 +132,8 @@ export default {
                 console.log(doc)
                 this.todos.push({
                   name: doc.data().name,
-                  status: doc.data().status
+                  status: doc.data().status,
+                  tag: doc.data().tag
                 })
             })
         },
@@ -100,27 +142,29 @@ export default {
       const user = auth.currentUser;
       this.fbuser = String(user.email)
       if (this.newTodo.length === 0) return;
-      if (this.indexEditTodo === null) {
-        try {
-          const newRow = await addDoc(collection(db, this.fbuser), {
-            name: this.newTodo,
-            status: "to-do"
-          });
-          console.log(newRow)
-          alert("refresh")
-          window.location.reload()
-          this.$emit("added")
-        }
-        catch(error) {
-                console.error("Error adding document ", error)
-        }
-      } else {
+      //if (this.indexEditTodo === null) {
+      try {
+        const newRow = await addDoc(collection(db, this.fbuser), {
+          name: this.newTodo,
+          status: "to-do",
+          tag: "School"
+        });
+        console.log(newRow)
+        alert("refresh")
+        window.location.reload()
+        this.$emit("added")
+      }
+      catch(error) {
+              console.error("Error adding document ", error)
+      }
+      /*} else {
         await setDoc(doc(db, this.fbuser, this.todos[this.indexEditTodo].name), {
           name: this.newTodo,
-          status: this.todos[this.indexEditTodo].status
+          status: this.todos[this.indexEditTodo].status,
+          tag: this.todos[this.indexEditTodo].tag
       });
         this.indexEditTodo = null;
-      }
+      } */
       this.newTodo = "";
     },
 
@@ -129,6 +173,7 @@ export default {
       const user = auth.currentUser;
       this.fbuser = String(user.email)
       const oldVal = this.todos[index].name;
+      //const docRef = doc(db, this.fbuser, where("name", "==", oldVal));
       const q = query(collection(db, this.fbuser), where("name", "==", oldVal));
       const querySnapshot = await getDocs(q);
       var currID;
@@ -163,9 +208,26 @@ export default {
       this.todos[index].status = this.todoStatus[statusIndex];
       await setDoc(doc(db, this.fbuser, this.todos[index].name), {
           name: this.todos[index].name,
-          status: statusIndex
+          status: this.todoStatus[statusIndex],
+          tag: this.todos[index].tag
       });
     },
+    async changeTag(index) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      this.fbuser = String(user.email)
+      let tagIndex = this.todoTag.indexOf(this.todos[index].tag);
+      if (++tagIndex > 2) {
+        tagIndex = 0;
+      }
+      this.todos[index].tag = this.todoTag[tagIndex];
+      await setDoc(doc(db, this.fbuser, this.todos[index].name), {
+          name: this.todos[index].name,
+          status: this.todos[index].name,
+          tag: this.todoTag[tagIndex]
+      });
+    },
+
     async upTodo(index) {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -253,6 +315,33 @@ export default {
     color: rgb(171, 171, 71);
     }
     .status-text-finished {
+    color: green;
+    }
+    .tag-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    }
+    .tag-indicator-school {
+    background: red;
+    }
+    .tag-indicator-wellness {
+    background: rgb(171, 171, 71);
+    }
+    .tag-indicator-others {
+    background: green;
+    }
+    .tag-text {
+    font-weight: bold;
+    cursor: pointer;
+    }
+    .tag-text-school {
+    color: red;
+    }
+    .tag-text-wellness {
+    color: rgb(171, 171, 71);
+    }
+    .tag-text-others {
     color: green;
     }
     .action-btn i {

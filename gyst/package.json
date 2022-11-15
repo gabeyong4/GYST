@@ -26,6 +26,7 @@
     "router": "^1.3.7",
     "vue": "^3.2.13",
     "vue-chartkick": "^1.1.0",
+    "vue-dayjs-plugin": "^1.0.0",
     "vue-editortable": "^1.1.5",
     "vue-progress-circle": "^1.1.2",
     "vue-router": "^4.1.5",
