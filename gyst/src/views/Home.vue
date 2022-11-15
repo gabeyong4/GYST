@@ -27,10 +27,6 @@ export default {
 
   setup() {
     return (sidebarWidth)
-  },
-
-  data() {
-
   }
 }
 </script>
