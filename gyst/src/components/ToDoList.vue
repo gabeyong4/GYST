@@ -23,6 +23,7 @@
   </b-card-group>
   </div>
   <h1 class="TopBar">To Do List</h1>
+
   <div class="d-flex mb-5">
     <input v-model="newTodo" type="text" placeholder="Add a new item" class="form-control form-input me-3"/>
     <button type="submit" class="submit-btn px-3 py-2" @click="addTodo()">Add</button>
