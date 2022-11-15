@@ -18,6 +18,7 @@
 <script>
 import SideNavBar from '@/components/SideNavBar.vue';
 import { sidebarWidth } from '@/components/state';
+// import store from "../store.js"
 
 
 export default {
@@ -27,10 +28,6 @@ export default {
 
   setup() {
     return (sidebarWidth)
-  },
-
-  data() {
-
   }
 }
 </script>

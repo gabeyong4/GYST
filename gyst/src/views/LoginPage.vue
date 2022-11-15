@@ -36,6 +36,7 @@ export default {
             // We need to create the instance only one time
             // Initialize the FirebaseUI Widget using Firebase
             ui = new firebaseui.auth.AuthUI(firebase.auth());
+            console.log(ui)
         }
 
         var uiConfig = {
