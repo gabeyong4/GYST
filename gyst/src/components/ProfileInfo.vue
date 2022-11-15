@@ -113,7 +113,9 @@ export default {
 .container {
     /* flex-direction: row; */
     background-color: #345;
-    display: block;
+    float: right;
+    width: 70%;
+    height: 500px;
     /* align-content: center; */
     /* flex: auto; */
     /* justify-content: center; */
