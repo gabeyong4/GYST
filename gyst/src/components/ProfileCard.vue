@@ -3,25 +3,38 @@
     <div id="profile-icon">
         <i class="fa-solid fa-user"></i>
     </div>
-    <h1> User Name </h1>
-    <h3> Student </h3>
-    <br>
+    <h1> Hi there Pal! </h1>
+    <h3> These are your significant achievements for the past 30 days! </h3>
     <div class="profilecard" id="card1">
-        <h2> {{ tasksDone }} </h2>
-        <h4> Tasks Done </h4>
+        <h3> {{ tasksDone }} </h3>
+        <h5> Tasks Done </h5>
     </div>
     <div class="profilecard" id="card2">
-        <h2> ${{ spending }} </h2>
-        <h4> Total Spendings </h4>
+        <h3> ${{ spending }} </h3>
+        <h5> Total Spendings </h5>
     </div>
     <div class="profilecard" id="card3">
-        <h2> #1 </h2>
-        <h4> Best User </h4>
+        <h3> #1 </h3>
+        <h5> Best User </h5>
     </div>
     <div class="profilecard" id="card4">
-        <h2> Nicolai and Para </h2>
-        <h4> Have a Big fat Juicy Cok </h4>
+        <h3> Nicolai and Para </h3>
+        <h5> Have a Big fat Juicy Cok </h5>
     </div>
+
+    <div class="form-container">
+        <h3> Your Details </h3>
+        <label for="emailad"> Email </label>
+        <input type="text" id="emailad" :placeholder="email"> <br>
+        <label for="name"> Name </label>
+        <input type="text" id="name" placeholder="John Doe"> <br>
+        <label for="role"> Role </label>
+        <input type="text" id="role" placeholder="Student">
+    </div>
+  </div>
+
+  <div>
+
   </div>
 
 </template>
@@ -40,7 +53,8 @@ export default {
     data() {
         return {
             tasksDone: 0,
-            spending: 0
+            spending: 0,
+            email: ""
         }
     },
 
@@ -62,6 +76,8 @@ export default {
         async getData() {
             const auth = getAuth();
             const user = auth.currentUser
+            this.email = String(user.email)
+            console.log(this.email)
             this.fbuser = String(user.email) + " To Do List"
             // this.fbuser = String(this.user.email)
             const coll = collection(db, this.fbuser);
@@ -117,17 +133,17 @@ export default {
 
 .profilecard {
     float: left;
-    width: 200px;
-    height: 150px;
+    width: 170px;
+    height: 120px;
     background-color: #E2F4FF;
     border: 2px solid rgb(117, 117, 117);
-    margin: 30px;
+    margin: 45px;
     border-radius: 25px;
     text-align: center;
     display:block;
     justify-content: center;
     align-items: center;
-    padding: 30px 0;
+    padding: 25px 0;
 }
 
 /* .profilecard #card3 h3 {
@@ -154,6 +170,36 @@ export default {
     border: 2px solid #acb0bc;
     border-radius: 25px;
 }
+
+.divider .hr.solid {
+    border-top: 3px solid black;
+    float: right;
+    height: 10px;
+    background-color: black;
+    width: 1080px;
+}
+
+.form-container {
+    float: left;
+    width: 1000px;
+    height: 280px;
+    background-color: #fafdff;
+    border: 2px solid rgb(117, 117, 117);
+    margin: 45px;
+    border-radius: 25px;
+    text-align: center;
+    display:block;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 0;
+}
+
+.form-container input {
+    margin: 10px;
+    width: 300px;
+    align-items: left;
+}
+
 
 
 </style>
