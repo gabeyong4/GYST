@@ -113,21 +113,6 @@ export default {
             console(this.spending)
         },
 
-        // async getTotalSpent() {
-        //     const auth = getAuth();
-        //     const user = auth.currentUser
-        //     this.fbuser = String(user.email) + " Budget Table"
-        //     // this.fbuser = String(this.user.email)
-        //     const coll = collection(db, this.fbuser);
-        //     const snapshot = await getCountFromServer(coll);
-        //     this.count = snapshot.data().count
-        //     console.log('count: ', snapshot.data().count); // getting the count of documents
-        //     let z = await getDocs(query(collection(db, String(this.fbuser))));
-        //     z.forEach((doc) => {
-        //         this.spending = this.spending + doc.data().amount
-        //     })
-        //     console(this.spending)
-        // }
     }
 
 
