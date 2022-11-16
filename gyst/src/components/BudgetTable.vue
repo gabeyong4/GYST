@@ -1,21 +1,24 @@
 <template>
-    <div class="TopBar">
-        <h1>Budget Tracking</h1>
+    <div class="budget-container">
+        <div id="header">
+            <h1>Budget Tracking</h1>
+        </div>
+
+        <AgGridVue/>
+        <!-- <button non="deselectRows">deselect rows</button> -->
+        <ag-grid-vue
+        :key="componentKey"
+        class="ag-theme-alpine"
+        :columnDefs = "columnDefs"
+        :rowData = "rowData"
+        :rowSelection="rowSelection"
+        @cell-value-changed = "save"
+        @selection-changed = "onSelectionChanged"
+        @row-selected = "onRowSelected">
+        </ag-grid-vue>
+        <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button>
+        <button id="deleteRow" v-on:click = "deleteRow()">Remove Selected</button>
     </div>
-    <AgGridVue/>
-    <!-- <button non="deselectRows">deselect rows</button> -->
-    <ag-grid-vue
-    :key="componentKey"
-    class="ag-theme-alpine"
-    :columnDefs = "columnDefs"
-    :rowData = "rowData"
-    :rowSelection="rowSelection"
-    @cell-value-changed = "save"
-    @selection-changed = "onSelectionChanged"
-    @row-selected = "onRowSelected">
-    </ag-grid-vue>
-    <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button>
-    <button id="deleteRow" v-on:click = "deleteRow()">Remove Selected</button>
 </template>
   
 <script>
@@ -315,20 +318,25 @@
 
 </script>
   
-<style>
-.TopBar {
-    text-align: center;
-    background-color: #474e5d;
+<style scoped>
+#header {
+    /* text-align: center;
+    background-color: #474e5d; */
     color: white;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.170509);
-    margin: 5px;
+    /* box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.170509); */
+    float: right;
+    width: 100%;
+    max-width: 1200px;
+    background-color: #474e5d;
   }
 
-.table {
-    /* float: right; */
-    margin:150;
-    width: 100%;
-    overflow: hidden;
+
+.budget-container {
+    float: right;
+    width: 90%;
+    max-width: 1200px;
+    margin-right: 20px;
+    min-width: 800px;
 }
 
 /* .ag-root-wrapper ag-layout-normal ag-ltr {

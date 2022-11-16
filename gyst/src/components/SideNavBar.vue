@@ -80,8 +80,9 @@ export default {
   background-color: var(--sidebar-bg-color);
   float: left;
   width: 0 1.5%;
-  position: sticky;
+  /* position: sticky; */
   height: 100%;
+  /* max-height: ; */
   z-index: 1;
   top: 0;
   left: 0;
@@ -90,6 +91,7 @@ export default {
   transition: 0.3s ease;
   display: flex;
   flex-direction:column;
+  /* border-radius: 10px; */
 }
 
 .sidebar span:hover {

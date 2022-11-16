@@ -1,6 +1,6 @@
 <template>
-
-<router-view/>
+  <SideNavBar/>
+  <router-view/>
 
 </template>
 
@@ -10,11 +10,15 @@ import "./styleguide.css"
 //import "../global.css"
 //import vueConfig from "vue.config";
 //import { useStore } from 'vuex'
-
+import SideNavBar from './components/SideNavBar.vue';
 
 
 export default {
   name:"App",
+
+  components: {
+    SideNavBar
+  }
 	/*beforeCreate() {
         const store = useStore()
 		store.commit('loadStore');
@@ -34,7 +38,6 @@ console.log("in App")
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   height: 100vh;
