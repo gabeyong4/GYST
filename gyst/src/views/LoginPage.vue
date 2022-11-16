@@ -4,10 +4,6 @@
             <div class="left-half">
                 <br><br><br><br><br>
                 <img id="logo" src="@/assets/gyst_logo2.png" alt="" >
-                <!-- <div id="pagecontent">
-                    Welcome to GYST! Your one stop platform to track your expenses, to do lists, and much more!
-                    Join now to discover a better you :)
-                </div> -->
             </div>
         </article>
         <div class="right-half ">
@@ -128,9 +124,6 @@ h1 {
     text-shadow: 2px 2px grey;
 }
 #logo{
-    /* display: block; */
-    /* margin-left: auto; */
-    /* margin-right: auto; */
     width: 80%;
 }
 h5{

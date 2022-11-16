@@ -47,7 +47,7 @@
 <script>
 import firebaseApp from "../firebase.js";
 import {getFirestore} from "firebase/firestore";
-import {collection, getCountFromServer, query, getDocs} from "firebase/firestore"; // , doc, deleteDoc, updateDoc
+import {collection, getCountFromServer, query, getDocs} from "firebase/firestore"; 
 import { getAuth, onAuthStateChanged} from "@firebase/auth";
 
 const db = getFirestore(firebaseApp);
@@ -65,7 +65,6 @@ export default {
 
     created() {
         this.getData();
-        // this.getTotalSpent();
     },
 
     mounted() {
@@ -84,7 +83,6 @@ export default {
             this.email = String(user.email)
             console.log(this.email)
             this.fbuser = String(user.email) + " To Do List"
-            // this.fbuser = String(this.user.email)
             const coll = collection(db, this.fbuser);
             const snapshot = await getCountFromServer(coll);
             this.count = snapshot.data().count
@@ -95,13 +93,11 @@ export default {
                     this.tasksDone = this.tasksDone + 1
                 }
                 console.log(doc.data().status)
-                
-                // this.rowData.push(doc.data())
+
             })
             console.log(this.tasksDone)
 
             this.fbuser2 = String(user.email) + " Budget Table"
-            // this.fbuser = String(this.user.email)
             const coll2 = collection(db, this.fbuser2);
             const snapshot2 = await getCountFromServer(coll2);
             this.count = snapshot2.data().count
@@ -122,10 +118,7 @@ export default {
 <style scoped>
 
 .header {
-    /* text-align: center;
-    background-color: #474e5d; */
     color: white;
-    /* box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.170509); */
     float: right;
     width: 100%;
     max-width: 1200px;
@@ -137,14 +130,9 @@ export default {
     background-color: #e9e9e9;
     max-width: 1200px;
     width: 100%;
-    /* max-height: 1000px; */
-    /* height: 1000px; */
     border: 2px solid rgb(213, 213, 213);
     border-radius: 10px;
-    /* margin: 50px; */
-    /* margin-right: 20px; */
     min-width: 800px;
-    /* align-content: center; */
 }
 
 .profilecard {
@@ -162,36 +150,12 @@ export default {
     padding: 25px 0;
 }
 
-/* .profilecard #card3 h3 {
-    text-align: center;
-    display:block;
-    justify-content: center;
-    align-items: center;
-} */
-
 .container {
     float: right;
     width: 90%;
     max-width: 1200px;
     margin-right: 20px;
     min-width: 800px;
-}
-
-#profile-icon .svg-inline--fa {
-    margin: 10px;
-    width: 100px;
-    height: 100px;
-    padding: 5px;
-    border: 2px solid #acb0bc;
-    border-radius: 25px;
-}
-
-.divider .hr.solid {
-    border-top: 3px solid black;
-    float: right;
-    height: 10px;
-    background-color: black;
-    width: 1080px;
 }
 
 .form-container {

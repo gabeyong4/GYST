@@ -9,7 +9,6 @@
         </div>
         <AgGridVue/>
         <ag-grid-vue
-        :key="componentKey"
         class="ag-theme-alpine"
         :columnDefs = "columnDefs"
         :rowData = "rowData"
@@ -28,7 +27,7 @@
   import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
   import firebaseApp from "../firebase.js";
   import {getFirestore} from "firebase/firestore";
-  import {deleteDoc, addDoc, collection, getDocs, query, getCountFromServer, where, doc, setDoc, updateDoc} from "firebase/firestore"; // , doc, deleteDoc, updateDoc
+  import {deleteDoc, addDoc, collection, getDocs, query, getCountFromServer, where, doc, setDoc, updateDoc} from "firebase/firestore"; 
   import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
   const db = getFirestore(firebaseApp); // Firestore Database
@@ -38,18 +37,13 @@
     
     data() {
         return {
-            columnDefs: null,
-            rowData:[],
-            detailCellRendererParams: null,
-            categories: ["Transport", "Food & Drinks", "Entertainment", "Clothes", "Vacation"],
-            gridApi: null,
-            rowSelection: null,
+            columnDefs: null, // the column characteristics => e.g. fields, headerName, whether it is sortable etc
+            rowData:[], // the data for each row
+            categories: ["Transport", "Food & Drinks", "Entertainment", "Clothes", "Vacation"], // the categories the user can select from under the "Category" column
+            rowSelection: null, // AG-Grid feature => allows you to choose whether you want single or multiple rows to be selected 
             rowSelected: [], // the variable we want to make globally in order to use in deleteRow()
             user: false,
-            componentKey: 0,
-            // renderComponent: true,
-            count: 0
-            // fbuser: ""
+            count: 0, // to keep track of the total number of documents within firebase under the user for index assignment
         };
     },
 
@@ -58,35 +52,40 @@
     },
 
     created() {
-        // this.createCollection()
-        this.getBudget();
-        this.rowSelection = "single"
+        this.getBudget();  // Retrieving the Budget Tracking List from firebase during this lifecycle
+        this.rowSelection = "single" // Limit the selection to only 1 row at a time
     },
 
     methods: {
-
+        // Objective: 
+        // To retrieve the budget tracking list documents from firebase & display within AG-Grid
         async getBudget() {
-            // console.log(this.user.email)
             const auth = getAuth();
             const user = auth.currentUser
-            this.fbuser = String(user.email) + " Budget Table"
-            // this.fbuser = String(this.user.email)
+            // the collection key for the user for the budget tracking table
+            this.fbuser = String(user.email) + " Budget Table" 
+            // Retrieval of all the documents under this user for the budget tracking table
             const coll = collection(db, this.fbuser);
             const snapshot = await getCountFromServer(coll);
             this.count = snapshot.data().count
             console.log('count: ', snapshot.data().count); // getting the count of documents
             let z = await getDocs(query(collection(db, String(this.fbuser))));
+            // For each document, push all the document fields into the AG-Grid
             z.forEach((doc) => {
                 console.log(doc)
                 this.rowData.push(doc.data())
             })
         },
 
+        // Objective:
+        // Adding a new document into a firebase and displaying the new row of data on the AG-Grid 
         async addNewRow() {
-            // console.log(this.user.email)
+            // the collection key for the user for the budget tracking table
             this.fbuser = String(this.user.email) + " Budget Table"
             try {
+                // updating the new total count of documents in firebase under this users collection key
                 this.count = this.count + 1
+                // add a new document into firebase
                 const newRow = await addDoc(collection(db, this.fbuser), {
                     header: this.count,
                     tasks: "sample",
@@ -96,13 +95,8 @@
                     comments:"sample"
                 });
                 console.log(newRow)
-                // this.methodThatForcesUpdate()
-                // this.forceRerender()
-                // alert("refresh")
-                // console.log(this.componentKey)
-                // this.$router.go()
+                // reload the page to show the new changes
                 window.location.reload()
-                // this.$emit("added")
             }
 
             catch(error) {
@@ -111,26 +105,29 @@
             
         },
 
+        // Objective:
+        // To update the data with the new changes made on the AG-Grid (which is the event)
+        // Display the new changes on the AG-Grid
         async save(event) {
-            // const oldVal = event.oldValue
-            // const columnChanged = event.colDef.field
-            // console.log("old val: " + oldVal)
             console.log(event.colDef.field)
+            // the new data
             const currData = event.data
             console.log(typeof currData.amount)
             const auth = getAuth();
             const user = auth.currentUser;
+            // the collection key for the user for the budget tracking table
             this.fbuser = String(user.email) + " Budget Table"
-            // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
+            // Retrieving the document that the changes has been made on
             const q = query(collection(db, this.fbuser), where("header", "==", currData.header));
             const querySnapshot = await getDocs(q);
             console.log(querySnapshot)
             var currID;
-            querySnapshot.forEach((doc) => { // did not account for multiple queries here
+            // Storing the document that has been updated Unique ID
+            querySnapshot.forEach((doc) => { 
                 currID = doc.id
                 console.log(doc.id, " => ", doc.data());
             });
-
+            // Updating operation 
             await setDoc(doc(db, this.fbuser, currID), {
                 header: currData.header,
                 tasks: currData.tasks,
@@ -140,26 +137,32 @@
                 comments:currData.comments
             });
             
-
-            // console.log('onCellValueChanged: ' + event.oldValue + ' to ' + event.newValue + " ")
-
         },
 
         async onRowSelected(event) {
             // store the data that is selected as a variable to use in the delete function
-            this.rowSelected.push(event.node.data)
-            console.log(this.rowSelected)
+            if (this.rowSelected.length == 0) { // if this.row already has 1
+                this.rowSelected.push(event.node.data)
+                console.log(this.rowSelected)
+            } else if (this.rowSelected.length == 1) {
+                this.rowSelected.push(event.node.data)
+                console.log(this.rowSelected)
+            } else { // lst has 2 elements 
+                this.rowSelected.shift()
+                console.log(this.rowSelected)
+            }
+            
+            // this.test = event.node.data()
+            // console.log(this.test)
         },
 
         // after deletion we need to update the index of the rest of the elements
         async deleteRow() {
-            // console.log(this.rowSelected)
             const auth = getAuth();
             const user = auth.currentUser;
             this.fbuser = String(user.email) + " Budget Table"
-            // const currData = this.rowSelected[0]
             const headSelected = this.rowSelected[0].header
-            // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
+            console.log(headSelected)
             const q = query(collection(db, this.fbuser), where("header", "==", headSelected));
             const querySnapshot = await getDocs(q);
             var currID;
@@ -212,9 +215,7 @@
             {headerName:"Category" , field:"category", cellEditorParams: {values : this.categories }, editable: true, sortable: true, filter: true, cellEditor: "agSelectCellEditor"},
             {headerName:"Comments" , field:"comments", editable: true, sortable: true, filter: true}
         ],
-
-        this.rowData,
-        this.gridApi
+        this.rowData
     }
 }
 
@@ -225,7 +226,6 @@
   float: right;
   width: 100%;
   max-width: 1200px;
-  /* margin-right: 20px; */
 }
 
 
@@ -247,7 +247,6 @@
 }
 
 .ag-theme-alpine {
-    /* margin: 1.5%; */
     width: auto;
     height: 400px;
 }

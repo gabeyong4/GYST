@@ -8,7 +8,6 @@
 </template>
 
 <script>
-// import SideNavBar from '@/components/SideNavBar.vue';
 import { sidebarWidth } from '@/components/state';
 import CalendarMonth from '@/components/CalendarMonth.vue';
 
