@@ -19,7 +19,7 @@
     </div>
     <div class="profilecard" id="card4">
         <h3> Nicolai and Para </h3>
-        <h5> Have a Big fat Juicy Cok </h5>
+        <h5> Have a Juicy coke </h5>
     </div>
 
     <div class="form-container">
