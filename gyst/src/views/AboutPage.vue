@@ -75,7 +75,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
   body {
     font-family: Arial, Helvetica, sans-serif;
@@ -115,8 +115,8 @@ export default {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: 8px;
     width: 80%;
-    color: black;
-    background-color: #000;
+    color: white;
+    background-color: #757a85;
   }
 
   .about-section {

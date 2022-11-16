@@ -180,13 +180,7 @@ export default {
                   priority: this.priority[0]
               });
               console.log(newRow)
-              // this.methodThatForcesUpdate()
-              // this.forceRerender()
-              // alert("refresh")
-              // console.log(this.componentKey)
-              // this.$router.go()
               window.location.reload()
-              // this.$emit("added")
           }
 
           catch(error) {
@@ -234,37 +228,6 @@ export default {
           this.rowSelected.push(event.node.data)
           console.log(this.rowSelected)
       },
-
-      // async resetDoc(doc, counter) {
-      //     await updateDoc(doc, {
-      //         "header": counter,
-      //     });
-      // },
-
-      // async resetIndex() {
-      //     const auth = getAuth();
-      //     const user = auth.currentUser;
-      //     this.tduser = String(user.email)
-      //     const querySnapshot = await getDocs(collection(db, this.tduser));
-      //     var counter = 1
-      //     querySnapshot.forEach((doc) => {
-      //         this.resetDoc(doc, counter)
-      //         counter = counter + 1
-      //     // doc.data() is never undefined for query doc snapshots
-      //         console.log(counter)
-      //         console.log(doc.id, " => ", doc.data().header);
-      //     });
-
-      //     // await setDoc(doc(db, this.tduser, currID), {
-      //     //     header: currData.header,
-      //     //     tasks: currData.tasks,
-      //     //     amount:Number(currData.amount),
-      //     //     date:currData.date,
-      //     //     category:currData.category,
-      //     //     comments:currData.comments
-      //     // });
-
-      // },
 
       // after deletion we need to update the index of the rest of the elements
       async deleteRow() {
