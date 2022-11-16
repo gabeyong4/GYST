@@ -4,15 +4,15 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-12 ">
+            <div class="col-md-12 mt-3">
                 <div class="card card-widget widget-user-2">
 
                     <div class="widget-user-header bg-warning">
                         <div class="widget-user-image">
                             <img 
                             class="rounded-circle" 
-                            height="80px" 
-                            width="auto" 
+                            height="auto" 
+                            width="65" 
                             src="@/assets/gabriel.png" 
                             alt="@/assets/gyst_logo.png">
                         </div>
@@ -111,8 +111,14 @@ export default {
 
 <style>
 .container {
+    /* flex-direction: row; */
     background-color: #345;
-    width: auto;
+    float: right;
+    width: 70%;
+    height: 500px;
+    /* align-content: center; */
+    /* flex: auto; */
+    /* justify-content: center; */
 }
 
 .info {
