@@ -1,5 +1,8 @@
 <template>
   <div class="calendar-month">
+    <div id="header">
+        <h1> GYST </h1>
+    </div>
     <div class="calendar-month-header">
       <CalendarDateIndicator
         :selected-date="selectedDate"
@@ -158,8 +161,24 @@ export default {
 </script>
 
 <style scoped>
+
+.calendar-month #header {
+    /* text-align: center;
+    background-color: #474e5d; */
+    color: white;
+    /* box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.170509); */
+    float: right;
+    width: 100%;
+    max-width: 1200px;
+    background-color: #474e5d;
+  }
+
 .calendar-month {
-  position: relative;
+  float: right;
+  width: 90%;
+  max-width: 1200px;
+  margin-right: 20px;
+  min-width: 800px;
   background-color: var(--grey-200);
   border: solid 1px var(--grey-300);
 }

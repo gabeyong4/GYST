@@ -1,35 +1,40 @@
 <template>
-  <div id="container">
-    <div id="profile-icon">
-        <i class="fa-solid fa-user"></i>
+  <div class="container">
+    <div class="header">
+        <h1>Profile Page</h1>
     </div>
-    <h1> Hi there Pal! </h1>
-    <h3> These are your significant achievements for the past 30 days! </h3>
-    <div class="profilecard" id="card1">
-        <h3> {{ tasksDone }} </h3>
-        <h5> Tasks Done </h5>
-    </div>
-    <div class="profilecard" id="card2">
-        <h3> ${{ spending }} </h3>
-        <h5> Total Spendings </h5>
-    </div>
-    <div class="profilecard" id="card3">
-        <h3> #1 </h3>
-        <h5> Best User </h5>
-    </div>
-    <div class="profilecard" id="card4">
-        <h3> Nicolai and Para </h3>
-        <h5> Have a Juicy coke </h5>
-    </div>
+    <div class="detail-container">
+        <div id="profile-icon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <h1> Hi there Pal! </h1>
+        <h3> These are your significant achievements for the past 30 days! </h3>
+        <div class="profilecard" id="card1">
+            <h3> {{ tasksDone }} </h3>
+            <h5> Tasks Done </h5>
+        </div>
+        <div class="profilecard" id="card2">
+            <h3> ${{ spending }} </h3>
+            <h5> Total Spendings </h5>
+        </div>
+        <div class="profilecard" id="card3">
+            <h3> #1 </h3>
+            <h5> Best User </h5>
+        </div>
+        <div class="profilecard" id="card4">
+            <h3> Nicolai and Para </h3>
+            <h5> Have a Juicy coke </h5>
+        </div>
 
-    <div class="form-container">
-        <h3> Your Details </h3>
-        <label for="emailad"> Email </label>
-        <input type="text" id="emailad" :placeholder="email"> <br>
-        <label for="name"> Name </label>
-        <input type="text" id="name" placeholder="John Doe"> <br>
-        <label for="role"> Role </label>
-        <input type="text" id="role" placeholder="Student">
+        <div class="form-container">
+            <h3> Your Details </h3>
+            <label for="emailad"> Email </label>
+            <input type="text" id="emailad" :placeholder="email"> <br>
+            <label for="name"> Name </label>
+            <input type="text" id="name" placeholder="John Doe"> <br>
+            <label for="role"> Role </label>
+            <input type="text" id="role" placeholder="Student">
+        </div>
     </div>
   </div>
 
@@ -129,7 +134,33 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+.header {
+    /* text-align: center;
+    background-color: #474e5d; */
+    color: white;
+    /* box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.170509); */
+    float: right;
+    width: 100%;
+    max-width: 1200px;
+    background-color: #474e5d;
+  }
+
+.detail-container {
+    float: right;
+    background-color: #e9e9e9;
+    max-width: 1200px;
+    width: 100%;
+    /* max-height: 1000px; */
+    /* height: 1000px; */
+    border: 2px solid rgb(213, 213, 213);
+    border-radius: 10px;
+    /* margin: 50px; */
+    /* margin-right: 20px; */
+    min-width: 800px;
+    /* align-content: center; */
+}
 
 .profilecard {
     float: left;
@@ -153,13 +184,12 @@ export default {
     align-items: center;
 } */
 
-#container {
+.container {
     float: right;
-    background-color: #e9e9e9;
-    width: 1080px;
-    height: 800px;
-    border: 2px solid rgb(213, 213, 213);
-    border-radius: 10px;
+    width: 90%;
+    max-width: 1200px;
+    margin-right: 20px;
+    min-width: 800px;
 }
 
 #profile-icon .svg-inline--fa {
