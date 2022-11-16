@@ -9,7 +9,6 @@
         </div>
         <AgGridVue/>
         <ag-grid-vue
-        :key="componentKey"
         class="ag-theme-alpine"
         :columnDefs = "columnDefs"
         :rowData = "rowData"
@@ -38,16 +37,13 @@
     
     data() {
         return {
-            columnDefs: null,
-            rowData:[],
-            detailCellRendererParams: null,
-            categories: ["Transport", "Food & Drinks", "Entertainment", "Clothes", "Vacation"],
-            gridApi: null,
-            rowSelection: null,
+            columnDefs: null, // the column characteristics => e.g. fields, headerName, whether it is sortable etc
+            rowData:[], // the data for each row
+            categories: ["Transport", "Food & Drinks", "Entertainment", "Clothes", "Vacation"], // the categories the user can select from under the "Category" column
+            rowSelection: null, // AG-Grid feature => allows you to choose whether you want single or multiple rows to be selected 
             rowSelected: [], // the variable we want to make globally in order to use in deleteRow()
             user: false,
-            componentKey: 0,
-            count: 0,
+            count: 0, // to keep track of the total number of documents within firebase under the user for index assignment
         };
     },
 
@@ -56,31 +52,40 @@
     },
 
     created() {
-        this.getBudget();
-        this.rowSelection = "single"
+        this.getBudget();  // Retrieving the Budget Tracking List from firebase during this lifecycle
+        this.rowSelection = "single" // Limit the selection to only 1 row at a time
     },
 
     methods: {
-
+        // Objective: 
+        // To retrieve the budget tracking list documents from firebase & display within AG-Grid
         async getBudget() {
             const auth = getAuth();
             const user = auth.currentUser
-            this.fbuser = String(user.email) + " Budget Table"
+            // the collection key for the user for the budget tracking table
+            this.fbuser = String(user.email) + " Budget Table" 
+            // Retrieval of all the documents under this user for the budget tracking table
             const coll = collection(db, this.fbuser);
             const snapshot = await getCountFromServer(coll);
             this.count = snapshot.data().count
             console.log('count: ', snapshot.data().count); // getting the count of documents
             let z = await getDocs(query(collection(db, String(this.fbuser))));
+            // For each document, push all the document fields into the AG-Grid
             z.forEach((doc) => {
                 console.log(doc)
                 this.rowData.push(doc.data())
             })
         },
 
+        // Objective:
+        // Adding a new document into a firebase and displaying the new row of data on the AG-Grid 
         async addNewRow() {
+            // the collection key for the user for the budget tracking table
             this.fbuser = String(this.user.email) + " Budget Table"
             try {
+                // updating the new total count of documents in firebase under this users collection key
                 this.count = this.count + 1
+                // add a new document into firebase
                 const newRow = await addDoc(collection(db, this.fbuser), {
                     header: this.count,
                     tasks: "sample",
@@ -90,6 +95,7 @@
                     comments:"sample"
                 });
                 console.log(newRow)
+                // reload the page to show the new changes
                 window.location.reload()
             }
 
@@ -99,22 +105,29 @@
             
         },
 
+        // Objective:
+        // To update the data with the new changes made on the AG-Grid (which is the event)
+        // Display the new changes on the AG-Grid
         async save(event) {
             console.log(event.colDef.field)
+            // the new data
             const currData = event.data
             console.log(typeof currData.amount)
             const auth = getAuth();
             const user = auth.currentUser;
+            // the collection key for the user for the budget tracking table
             this.fbuser = String(user.email) + " Budget Table"
+            // Retrieving the document that the changes has been made on
             const q = query(collection(db, this.fbuser), where("header", "==", currData.header));
             const querySnapshot = await getDocs(q);
             console.log(querySnapshot)
             var currID;
-            querySnapshot.forEach((doc) => { // did not account for multiple queries here
+            // Storing the document that has been updated Unique ID
+            querySnapshot.forEach((doc) => { 
                 currID = doc.id
                 console.log(doc.id, " => ", doc.data());
             });
-
+            // Updating operation 
             await setDoc(doc(db, this.fbuser, currID), {
                 header: currData.header,
                 tasks: currData.tasks,
@@ -202,9 +215,7 @@
             {headerName:"Category" , field:"category", cellEditorParams: {values : this.categories }, editable: true, sortable: true, filter: true, cellEditor: "agSelectCellEditor"},
             {headerName:"Comments" , field:"comments", editable: true, sortable: true, filter: true}
         ],
-
-        this.rowData,
-        this.gridApi
+        this.rowData
     }
 }
 

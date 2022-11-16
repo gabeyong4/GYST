@@ -51,7 +51,6 @@
     <AgGridVue/>
     <!-- <button non="deselectRows">deselect rows</button> -->
     <ag-grid-vue
-    :key="componentKey"
     class="ag-theme-alpine"
     :columnDefs = "columnDefs"
     :rowData = "rowData"
@@ -85,18 +84,15 @@ export default {
   
   data() {
       return {
-          columnDefs: null,
-          rowData:[],
-          detailCellRendererParams: null,
-          status: ["to-do", "on-going", "finished"],
-          tag: ["School", "Wellness", "CCA", "General"],
-          priority: ["High", "Medium", "Low"],
-          rowSelection: null,
-          gridApi: null,
+          columnDefs: null, // the column characteristics => e.g. fields, headerName, whether it is sortable etc
+          rowData:[], // the data for each row
+          status: ["to-do", "on-going", "finished"], // the status the user can select from under the "Status" column
+          tag: ["School", "Wellness", "CCA", "General"], // the tags the user can select from under the "Tag" column
+          priority: ["High", "Medium", "Low"], // the priority the user can select from under the "Priority" column
+          rowSelection: null, // AG-Grid feature => allows you to choose whether you want single or multiple rows to be selected 
           rowSelected: [], // the variable we want to make globally in order to use in deleteRow()
           user: false,
-          componentKey: 0,
-          count: 0,
+          count: 0, // to keep track of the total number of documents within firebase under the user for index assignment
           tagTotalCounts: [0, 0, 0, 0],
           tagCompletedCounts: [0, 0, 0, 0],
       };
@@ -107,21 +103,26 @@ export default {
   },
 
   created() {
-      this.getToDoLst();
-      this.rowSelection = "single"
+      this.getToDoLst(); // Retrieving the To-Do List from firebase during this lifecycle
+      this.rowSelection = "single" // Limit the selection to only 1 row at a time
   },
 
   methods: {
-
+      // Objective: 
+      // To retrieve the To-Do list documents from firebase & display within AG-Grid
       async getToDoLst() {
           const auth = getAuth();
           const user = auth.currentUser
+          // the collection key for the user for the to do list table
           this.tduser = String(user.email) + " To Do List"
+          // Retrieval of all the documents under this user for the to do list table
           const coll = collection(db, this.tduser);
           const snapshot = await getCountFromServer(coll);
           this.count = snapshot.data().count
           console.log('count: ', snapshot.data().count); // getting the count of documents
           let z = await getDocs(query(collection(db, String(this.tduser))));
+          // For each document, push all the document fields into the AG-Grid
+          // update the tagTotalCount accordingly for the progress bar image
           z.forEach((doc) => {
               console.log(doc)
               this.rowData.push(doc.data())
@@ -160,11 +161,15 @@ export default {
           })
       },
 
+      // Objective:
+        // Adding a new document into a firebase and displaying the new row of data on the AG-Grid 
       async addNewRow() {
+        // the collection key for the user for the to do list table
           this.tduser = String(this.user.email) + " To Do List"
           console.log(this.tduser)
           try {
               this.count = this.count + 1
+              // add a new document into firebase
               const newRow = await addDoc(collection(db, this.tduser), {
                   header: this.count,
                   item: "sample",
@@ -174,6 +179,7 @@ export default {
                   priority: this.priority[0]
               });
               console.log(newRow)
+              // reload the page to show the new changes
               window.location.reload()
           }
 
@@ -183,22 +189,29 @@ export default {
           
       },
 
+      // Objective:
+      // To update the data with the new changes made on the AG-Grid (which is the event)
+      // Display the new changes on the AG-Grid
       async save(event) {
           console.log(event.colDef.field)
+          // the new data
           const currData = event.data
           console.log(typeof currData.amount)
           const auth = getAuth();
           const user = auth.currentUser;
+          // the collection key for the user for the to do list table
           this.tduser = String(user.email) + " To Do List"
+          // Retrieving the document that the changes has been made on
           const q = query(collection(db, this.tduser), where("header", "==", currData.header));
           const querySnapshot = await getDocs(q);
           console.log(querySnapshot)
           var currID;
+          // Storing the document that has been updated Unique ID
           querySnapshot.forEach((doc) => { // did not account for multiple queries here
               currID = doc.id
               console.log(doc.id, " => ", doc.data());
           });
-
+          // Updating operation 
           await setDoc(doc(db, this.tduser, currID), {
               header: currData.header,
               item: currData.item,
@@ -280,8 +293,7 @@ export default {
           {headerName:"Priority" , field:"priority", cellEditorParams: {values : this.priority }, editable: true, sortable: true, filter: true, cellEditor: "agSelectCellEditor"},
       ],
 
-      this.rowData,
-      this.gridApi
+      this.rowData
   }
 
 }
