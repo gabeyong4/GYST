@@ -15,13 +15,6 @@
     <SideBarLink to="/profile" icon = "fa-solid fa-user-secret"> Profile</SideBarLink>
     <SideBarLink to="/about" icon="fa-regular fa-page">  About </SideBarLink>
     <LogOut icon="fa fa-sign-out"> </LogOut>
-    <!-- <span 
-      class = "collapse-icon" 
-      :class="{'rotate-180': collapsed}"
-      @click="toggleSidebar"
-    >
-      <i class="fas fa-angle-double-left"> </i> 
-    </span> -->
 
   </div>
 </template>
@@ -80,9 +73,7 @@ export default {
   background-color: var(--sidebar-bg-color);
   float: left;
   width: 0 1.5%;
-  /* position: sticky; */
   height: 100%;
-  /* max-height: ; */
   z-index: 1;
   top: 0;
   left: 0;
@@ -91,27 +82,12 @@ export default {
   transition: 0.3s ease;
   display: flex;
   flex-direction:column;
-  /* border-radius: 10px; */
 }
 
 .sidebar span:hover {
   font-weight: bold;
   color: white;
 }
-
-/* .collapse-icon {
-  position: absolute;
-  bottom:0;
-  padding: 0.75em;
-  color: rgba(255,255,255,0.7);
-  transition: 0.2s linear;
-} */
-
-/* .rotate-180 {
-  transform: rotate(180deg);
-  transition: 0.2s linear;
-} */
-
 
 a {
   text-decoration: none;

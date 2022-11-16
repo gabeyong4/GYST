@@ -6,7 +6,6 @@
 </template>
 
 <script>
-// import SideNavBar from '@/components/SideNavBar.vue';
 import BudgetTable from '@/components/BudgetTable.vue';
 
 export default {

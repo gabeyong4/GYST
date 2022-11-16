@@ -5,9 +5,7 @@
 </template>
 
 <script>
-//import ToDoGoal from '@/components/ToDoGoal.vue';
 import ToDoList from '@/components/ToDoList.vue';
-// import SideNavBar from '@/components/SideNavBar.vue';
 
 
 export default {
