@@ -14,7 +14,7 @@
         <div class="container">
           <h2>Gabriel Yong</h2>
           <p class="title">Product Owner</p>
-          <p>I'm Gabriel but you can call me Daddy</p>
+          <p> vatican cameos </p>
           <p>gabrielyong@gmail.com</p>
           <p><button class="button">Contact Me</button></p>
         </div>
