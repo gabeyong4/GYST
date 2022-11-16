@@ -1,49 +1,4 @@
 <template>
-  <div class = "TopBar">
-    <h1>Goals</h1>
-  </div>
-  <div class="card-group">
-    <div class="card text-black">
-      <div class="card-body">
-        <h5 class="card-title">School</h5>
-        <div class="progress" style="height: 40px;">
-          <div class="progress-bar progress-bar-striped" role="progressbar"  v-bind:style="{ width: ((tagCompletedCounts[0]/tagTotalCounts[0]) * 100) + '%'}" v-bind:aria-valuenow="schoolProgress" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <h5 v-if="tagTotalCounts[0]!=0">{{((tagCompletedCounts[0]/tagTotalCounts[0]) * 100)}} %</h5>
-        <h5 v-else> 0% </h5>
-      </div>
-    </div>
-    <div class="card text-black">
-      <div class="card-body">
-        <h5 class="card-title">Wellness</h5>
-        <div class="progress" style="height: 40px;">
-          <div class="progress-bar progress-bar-striped bg-success" role="progressbar" v-bind:style="{ width: ((tagCompletedCounts[1]/tagTotalCounts[1]) * 100) + '%'}" v-bind:aria-valuenow="((tagCompletedCounts[1]/tagTotalCounts[1]) * 100)" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <h5 v-if="tagTotalCounts[1]!=0">{{((tagCompletedCounts[1]/tagTotalCounts[1]) * 100)}} %</h5>
-        <h5 v-else> 0% </h5>
-      </div>
-    </div>
-    <div class="card text-black">
-      <div class="card-body">
-        <h5 class="card-title">CCA</h5>
-        <div class="progress" style="height: 40px;">
-          <div class="progress-bar progress-bar-striped bg-info" role="progressbar" v-bind:style="{ width: ((tagCompletedCounts[2]/tagTotalCounts[2]) * 100) + '%'}" v-bind:aria-valuenow="((tagCompletedCounts[1]/tagTotalCounts[1]) * 100)" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <h5 v-if="tagTotalCounts[2]!=0">{{((tagCompletedCounts[2]/tagTotalCounts[2]) * 100)}} %</h5>
-        <h5 v-else> 0% </h5>      
-      </div>
-    </div>
-    <div class="card text-black">
-      <div class="card-body">
-        <h5 class="card-title">General</h5>
-        <div class="progress" style="height: 40px;">
-          <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" v-bind:style="{ width: ((tagCompletedCounts[3]/tagTotalCounts[3]) * 100) + '%'}" v-bind:aria-valuenow="((tagCompletedCounts[1]/tagTotalCounts[1]) * 100)" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <h5 v-if="tagTotalCounts[3]!=0">{{((tagCompletedCounts[3]/tagTotalCounts[3]) * 100)}} %</h5>
-        <h5 v-else> 0% </h5>     
-      </div>
-    </div>
-  </div>
   <div class="TopBar">
       <h1>To Do List </h1>
   </div>
@@ -91,11 +46,7 @@ export default {
           rowSelected: [], // the variable we want to make globally in order to use in deleteRow()
           user: false,
           componentKey: 0,
-          count: 0,
-          //schoolProgress: 0,
-          tagTotalCounts: [0, 0, 0, 0],
-          tagCompletedCounts: [0, 0, 0, 0],
-          //schoolProgress: (this.tagCompletedCounts[0]/this.tagTotalCounts[0]) * 100*/
+          count: 0
       };
   },
 
@@ -125,38 +76,6 @@ export default {
           z.forEach((doc) => {
               console.log(doc)
               this.rowData.push(doc.data())
-              if (doc.data().tag == "School") {
-                this.tagTotalCounts[0]+=1
-                if (doc.data().status == "finished"){
-                  this.tagCompletedCounts[0]+=1
-                } else if (doc.data().status == "on-going") {
-                  this.tagCompletedCounts[0]+=0.5
-                }
-              }
-              if (doc.data().tag == "Wellness") {
-                this.tagTotalCounts[1]+=1
-                if (doc.data().status == "finished"){
-                  this.tagCompletedCounts[1]+=1
-                } else if (doc.data().status == "on-going") {
-                  this.tagCompletedCounts[1]+=0.5
-                }
-              }
-              if (doc.data().tag == "CCA") {
-                this.tagTotalCounts[2]+=1
-                if (doc.data().status == "finished"){
-                  this.tagCompletedCounts[2]+=1
-                } else if (doc.data().status == "on-going") {
-                  this.tagCompletedCounts[2]+=0.5
-                }
-              } 
-              if (doc.data().tag == "General") {
-                this.tagTotalCounts[3]+=1
-                if (doc.data().status == "finished"){
-                  this.tagCompletedCounts[3]+=1
-                } else if (doc.data().status == "on-going") {
-                  this.tagCompletedCounts[3]+=0.5
-                }
-              }
           })
       },
 
@@ -487,47 +406,12 @@ box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
 background-color: rgb(27, 138, 75);
 box-shadow: none;
 }
-
 </style>
 
 
 
 
-<!--<div class="TopBar">
-      <h1>To Do Goals </h1>
-  </div>
-  <div>
-  <mdb-container>
-		<mdb-row>
-			<mdb-card-group deck>
-				<mdb-card>
-					<mdb-view hover>
-						<a href="#!">
-							<mdb-card-image src="https://mdbootstrap.com/img/Photos/Others/images/16.webp" alt="Card image cap"></mdb-card-image>
-							<mdb-mask flex-center waves overlay="white-slight"></mdb-mask>
-						</a>
-					</mdb-view>
-				</mdb-card>
-				<mdb-card>
-					<mdb-view hover>
-						<a href="#!">
-							<mdb-card-image src="https://mdbootstrap.com/img/Photos/Others/images/14.webp" alt="Card image cap"></mdb-card-image>
-							<mdb-mask flex-center waves overlay="white-slight"></mdb-mask>
-						</a>
-					</mdb-view>
-				</mdb-card>
-				<mdb-card>
-					<mdb-view hover>
-						<a href="#!">
-							<mdb-card-image src="https://mdbootstrap.com/img/Photos/Others/images/15.webp" alt="Card image cap"></mdb-card-image>
-							<mdb-mask flex-center waves overlay="white-slight"></mdb-mask>
-						</a>
-					</mdb-view>
-				</mdb-card>
-			</mdb-card-group>
-		</mdb-row>
-	</mdb-container>
-  </div> -->
+
 
 <!-- /* eslint-disable vue/no-unused-components */
 
