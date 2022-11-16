@@ -14,7 +14,7 @@
         <div class="container">
           <h2>Gabriel Yong</h2>
           <p class="title">Product Owner</p>
-          <p>I'm Gabriel but you can call me Daddy</p>
+          <p>NUS Y3 Business Analytics</p>
           <p>gabrielyong@gmail.com</p>
           <p><button class="button">Contact Me</button></p>
         </div>
@@ -27,7 +27,7 @@
         <div class="container">
           <h2>Parathan Arasu</h2>
           <p class="title">SCRUM Master</p>
-          <p>Hi there!</p>
+          <p>NUS Y3 Business Analytics</p>
           <p>parathan@gmail.com</p>
           <p><button class="button">Contact Me</button></p>
         </div>
@@ -42,7 +42,7 @@
         <div class="container">
           <h2>Angel Koh</h2>
           <p class="title">SCRUM Team</p>
-          <p>hehe XD</p>
+          <p>NUS Y3 Business Analytics</p>
           <p>angelkoh@gmail.com</p>
           <p><button class="button">Contact Me</button></p>
         </div>
@@ -55,7 +55,7 @@
         <div class="container">
           <h2>Nicolai Neo</h2>
           <p class="title">SCRUM Team</p>
-          <p>pee pee poo poo check</p>
+          <p>NUS Y3 Business Analytics</p>
           <p>nicolaineo@gmail.com</p>
           <p><button class="button">Contact Me</button></p>
         </div>
