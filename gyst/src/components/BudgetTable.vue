@@ -3,9 +3,11 @@
         <div id="header">
             <h1>Budget Tracking</h1>
         </div>
-
+        <div class="buttons">
+            <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button>
+            <button id="deleteRow" v-on:click = "deleteRow()">Remove Selected</button>
+        </div>
         <AgGridVue/>
-        <!-- <button non="deselectRows">deselect rows</button> -->
         <ag-grid-vue
         :key="componentKey"
         class="ag-theme-alpine"
@@ -16,47 +18,20 @@
         @selection-changed = "onSelectionChanged"
         @row-selected = "onRowSelected">
         </ag-grid-vue>
-        <button id="addnewRows" v-on:click = "addNewRow();"> Add New Row </button>
-        <button id="deleteRow" v-on:click = "deleteRow()">Remove Selected</button>
+        
     </div>
 </template>
   
 <script>
   import { AgGridVue } from "ag-grid-vue3";  // the AG Grid Vue Component
-//   import { reactive } from "vue";
   import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
   import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
   import firebaseApp from "../firebase.js";
   import {getFirestore} from "firebase/firestore";
   import {deleteDoc, addDoc, collection, getDocs, query, getCountFromServer, where, doc, setDoc, updateDoc} from "firebase/firestore"; // , doc, deleteDoc, updateDoc
   import { getAuth, onAuthStateChanged } from "@firebase/auth";
-//   import store from "../store.js"
-//   import { nextTick } from 'vue';
-//   import FullWidthCellRenderer from './fullWidthCellRendererVue.js';
 
-
-// const auth = getAuth()
-// this.fbuser = auth.currentUser.email
-//   const email = user.email
-
-  const db = getFirestore(firebaseApp);
-//   const renderComponent = ref(true);
-  /* eslint-disable no-unused-vars */
-//   const componentKey = ref(0)
-  /* eslint-enable no-unused-vars */
-  
-// var inputRow = {};
-// var gridOptions = {
-//     pinnedTopwRowData: [inputRow]
-// }
-
-//   let inputRow = {}
-
-//   function setInputRow(newData) {
-//     inputRow = newData;
-//     gridOptions.api.setPinnedTopRowData([inputRow]);
-//   }
-
+  const db = getFirestore(firebaseApp); // Firestore Database
   
   export default {
     name: "App",
@@ -176,37 +151,6 @@
             console.log(this.rowSelected)
         },
 
-        // async resetDoc(doc, counter) {
-        //     await updateDoc(doc, {
-        //         "header": counter,
-        //     });
-        // },
-
-        // async resetIndex() {
-        //     const auth = getAuth();
-        //     const user = auth.currentUser;
-        //     this.fbuser = String(user.email)
-        //     const querySnapshot = await getDocs(collection(db, this.fbuser));
-        //     var counter = 1
-        //     querySnapshot.forEach((doc) => {
-        //         this.resetDoc(doc, counter)
-        //         counter = counter + 1
-        //     // doc.data() is never undefined for query doc snapshots
-        //         console.log(counter)
-        //         console.log(doc.id, " => ", doc.data().header);
-        //     });
-
-        //     // await setDoc(doc(db, this.fbuser, currID), {
-        //     //     header: currData.header,
-        //     //     tasks: currData.tasks,
-        //     //     amount:Number(currData.amount),
-        //     //     date:currData.date,
-        //     //     category:currData.category,
-        //     //     comments:currData.comments
-        //     // });
-
-        // },
-
         // after deletion we need to update the index of the rest of the elements
         async deleteRow() {
             // console.log(this.rowSelected)
@@ -229,10 +173,6 @@
             var lst = []
             allDocs.forEach((doc) => {
                 lst.push([doc.id, doc.data()])
-            //     this.resetDoc(doc, counter)
-            //     counter = counter + 1
-            // // doc.data() is never undefined for query doc snapshots
-            //     console.log(counter)
                 console.log(doc.id, " => ", doc.data().header);
             });
             console.log(lst)
@@ -241,32 +181,11 @@
             for (let index = 0; index < lst.length; index++) {
                 const data = lst[index]
                 const userDocRef = doc(db, this.fbuser, data[0]);
-                // const docSnap = await getDoc(userDocRef)
                 await updateDoc(userDocRef, {
                     "header": index+1,
                 });
-                // console.log(numFruit)
             }
             window.location.reload()
-
-
-
-
-
-
-            // const coll = collection(db, this.fbuser);
-            // const snapshot = await getCountFromServer(coll);
-            // this.count = snapshot.data().count
-            // this.resetIndex()
-            // const querySnapshot = await getDocs(collection(db, this.fbuser));
-            // var counter = 1
-            // querySnapshot.forEach((doc) => {
-            //     this.resetDoc(doc, counter)
-            //     counter = counter + 1
-            // // doc.data() is never undefined for query doc snapshots
-            //     console.log(counter)
-            //     console.log(doc.id, " => ", doc.data().header);
-            // });
 
         }
 
@@ -283,14 +202,6 @@
     },
 
     beforeMount() {
-        // const gridApi = ref(null); // Optional - for accessing Grid's API
-
-        // // Obtain API from grid's onGridReady event
-        // const onGridReady = (params) => {
-        //     gridApi.value = params.api;
-        // };
-        
-        // const rowData = reactive({}); // Set rowData to Array of Objects, one Object per Row
 
         // Each Column Definition results in one Column.
         this.columnDefs = [
@@ -305,25 +216,21 @@
         this.rowData,
         this.gridApi
     }
-
-    // mounted() {
-    //     const auth = getAuth();
-    //     onAuthStateChanged(auth, (user) => {
-    //         if (user) {
-    //             this.user = user;
-    //         }
-    //     })
-    // }
 }
 
 </script>
   
 <style scoped>
+.buttons {
+  float: right;
+  width: 100%;
+  max-width: 1200px;
+  /* margin-right: 20px; */
+}
+
+
 #header {
-    /* text-align: center;
-    background-color: #474e5d; */
     color: white;
-    /* box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.170509); */
     float: right;
     width: 100%;
     max-width: 1200px;
@@ -339,12 +246,6 @@
     min-width: 800px;
 }
 
-/* .ag-root-wrapper ag-layout-normal ag-ltr {
-    float: right;
-    margin: 0 1.5%;
-    width: 73%;
-} */
-
 .ag-theme-alpine {
     /* margin: 1.5%; */
     width: auto;
@@ -356,7 +257,7 @@
 }
 
 
-#addnewRows {
+.buttons #addnewRows {
     float: right;
     margin: 2px;
     width: 10%;
@@ -383,21 +284,21 @@
     border: 2px solid black;
 }
 
-#addnewRows:hover,
+.buttons #addnewRows:hover,
 #addnewRows:focus {
   background-color: rgb(27, 138, 75);
 }
 
-#addnewRows:focus {
+.buttons #addnewRows:focus {
   box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
 }
 
-#addnewRows:active {
+.buttons #addnewRows:active {
   background-color: rgb(27, 138, 75);
   box-shadow: none;
 }
 
-#deleteRow {
+.buttons #deleteRow {
     float: right;
     margin: 2px;
     width: 0 25%;
@@ -424,16 +325,16 @@
     border: 2px solid black;
 }
 
-#deleteRow:hover,
+.buttons #deleteRow:hover,
 #deleteRow:focus {
   background-color: rgb(27, 138, 75);
 }
 
-#deleteRow:focus {
+.buttons #deleteRow:focus {
   box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
 }
 
-#deleteRow:active {
+.buttons #deleteRow:active {
   background-color: rgb(27, 138, 75);
   box-shadow: none;
 }
