@@ -18,8 +18,8 @@
         <h5> Best User </h5>
     </div>
     <div class="profilecard" id="card4">
-        <h3> Nicolai and Para </h3>
-        <h5> Have a Juicy coke </h5>
+        <h3> Achievement </h3>
+        <h5> #New User! </h5>
     </div>
 
     <div class="form-container">
