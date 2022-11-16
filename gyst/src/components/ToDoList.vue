@@ -97,10 +97,8 @@ export default {
           user: false,
           componentKey: 0,
           count: 0,
-          //schoolProgress: 0,
           tagTotalCounts: [0, 0, 0, 0],
           tagCompletedCounts: [0, 0, 0, 0],
-          //schoolProgress: (this.tagCompletedCounts[0]/this.tagTotalCounts[0]) * 100*/
       };
   },
 
@@ -109,7 +107,6 @@ export default {
   },
 
   created() {
-      // this.createCollection()
       this.getToDoLst();
       this.rowSelection = "single"
   },
@@ -117,11 +114,9 @@ export default {
   methods: {
 
       async getToDoLst() {
-          // console.log(this.user.email)
           const auth = getAuth();
           const user = auth.currentUser
           this.tduser = String(user.email) + " To Do List"
-          // this.tduser = String(this.user.email)
           const coll = collection(db, this.tduser);
           const snapshot = await getCountFromServer(coll);
           this.count = snapshot.data().count
@@ -166,7 +161,6 @@ export default {
       },
 
       async addNewRow() {
-          // console.log(this.user.email)
           this.tduser = String(this.user.email) + " To Do List"
           console.log(this.tduser)
           try {
@@ -190,16 +184,12 @@ export default {
       },
 
       async save(event) {
-          // const oldVal = event.oldValue
-          // const columnChanged = event.colDef.field
-          // console.log("old val: " + oldVal)
           console.log(event.colDef.field)
           const currData = event.data
           console.log(typeof currData.amount)
           const auth = getAuth();
           const user = auth.currentUser;
           this.tduser = String(user.email) + " To Do List"
-          // const q = query(collection(db, this.tduser), where("tasks", "==", oldVal));
           const q = query(collection(db, this.tduser), where("header", "==", currData.header));
           const querySnapshot = await getDocs(q);
           console.log(querySnapshot)
@@ -217,31 +207,31 @@ export default {
               tag: currData.tag,
               priority:currData.priority
           });
-          
-
-          // console.log('onCellValueChanged: ' + event.oldValue + ' to ' + event.newValue + " ")
-
       },
 
       async onRowSelected(event) {
-          // store the data that is selected as a variable to use in the delete function
-          this.rowSelected.push(event.node.data)
-          console.log(this.rowSelected)
+        if (this.rowSelected.length == 0) { // if this.row already has 1
+            this.rowSelected.push(event.node.data)
+            console.log(this.rowSelected)
+        } else if (this.rowSelected.length == 1) {
+            this.rowSelected.push(event.node.data)
+            console.log(this.rowSelected)
+        } else { // lst has 2 elements 
+            this.rowSelected.shift()
+            console.log(this.rowSelected)
+        }
       },
 
       // after deletion we need to update the index of the rest of the elements
       async deleteRow() {
-          // console.log(this.rowSelected)
           const auth = getAuth();
           const user = auth.currentUser;
           this.tduser = String(user.email) + " To Do List"
-          // const currData = this.rowSelected[0]
           const headSelected = this.rowSelected[0].header
-          // const q = query(collection(db, this.tduser), where("tasks", "==", oldVal));
           const q = query(collection(db, this.tduser), where("header", "==", headSelected));
           const querySnapshot = await getDocs(q);
           var currID;
-          querySnapshot.forEach((doc) => { // did not account for multiple queries here
+          querySnapshot.forEach((doc) => { 
               currID = doc.id
               console.log(doc.id, " => ", doc.data());
           });
@@ -251,10 +241,6 @@ export default {
           var lst = []
           allDocs.forEach((doc) => {
               lst.push([doc.id, doc.data()])
-          //     this.resetDoc(doc, counter)
-          //     counter = counter + 1
-          // // doc.data() is never undefined for query doc snapshots
-          //     console.log(counter)
               console.log(doc.id, " => ", doc.data().header);
           });
           console.log(lst)
@@ -263,33 +249,11 @@ export default {
           for (let index = 0; index < lst.length; index++) {
               const data = lst[index]
               const userDocRef = doc(db, this.tduser, data[0]);
-              // const docSnap = await getDoc(userDocRef)
               await updateDoc(userDocRef, {
                   "header": index+1,
               });
-              // console.log(numFruit)
           }
           window.location.reload()
-
-
-
-
-
-
-          // const coll = collection(db, this.tduser);
-          // const snapshot = await getCountFromServer(coll);
-          // this.count = snapshot.data().count
-          // this.resetIndex()
-          // const querySnapshot = await getDocs(collection(db, this.tduser));
-          // var counter = 1
-          // querySnapshot.forEach((doc) => {
-          //     this.resetDoc(doc, counter)
-          //     counter = counter + 1
-          // // doc.data() is never undefined for query doc snapshots
-          //     console.log(counter)
-          //     console.log(doc.id, " => ", doc.data().header);
-          // });
-
       }
 
   },
@@ -305,20 +269,11 @@ export default {
   },
 
   beforeMount() {
-      // const gridApi = ref(null); // Optional - for accessing Grid's API
-
-      // // Obtain API from grid's onGridReady event
-      // const onGridReady = (params) => {
-      //     gridApi.value = params.api;
-      // };
-      
-      // const rowData = reactive({}); // Set rowData to Array of Objects, one Object per Row
 
       // Each Column Definition results in one Column.
       this.columnDefs = [
           {headerName:"#" , field:"header", editable: false, sortable: true, checkboxSelection: true},
           {headerName:"Todo Item" , field:"item", editable: true, sortable: true, filter: true},
-          // {headerName:"Amount" , field:"amount", editable: true, sortable: true, filter: true, type: "numberColumn"},
           {headerName:"Deadline" , field:"date", editable: true, sortable: true, filter: true},
           {headerName:"Status" , field:"status", cellEditorParams: {values : this.status }, editable: true, sortable: true, filter: true, cellEditor: "agSelectCellEditor"},
           {headerName:"Tag" , field:"tag", cellEditorParams: {values : this.tag }, editable: true, sortable: true, filter: true, cellEditor: "agSelectCellEditor"},
@@ -329,14 +284,6 @@ export default {
       this.gridApi
   }
 
-  // mounted() {
-  //     const auth = getAuth();
-  //     onAuthStateChanged(auth, (user) => {
-  //         if (user) {
-  //             this.user = user;
-  //         }
-  //     })
-  // }
 }
 
 </script>
@@ -350,10 +297,7 @@ export default {
 }
 
 .header {
-    /* text-align: center;
-    background-color: #474e5d; */
     color: white;
-    /* box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.170509); */
     float: right;
     width: 100%;
     max-width: 1200px;
@@ -373,7 +317,6 @@ export default {
   float: right;
   width: 100%;
   max-width: 1200px;
-  /* margin-right: 20px; */
 }
 
 
@@ -386,10 +329,8 @@ export default {
 }
 
 .ag-theme-alpine {
-  /* margin: 1.5%; */
   width: auto;
   height: 400px;
-  /* margin-right: 20px; */
 }
 
 .buttons #addnewRows {

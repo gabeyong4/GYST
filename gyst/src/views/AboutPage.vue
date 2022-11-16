@@ -68,7 +68,6 @@
 </template>
 
 <script>
-// import SideNavBar from '@/components/SideNavBar.vue';
 
 export default {
     name: "AboutPage"

@@ -28,7 +28,7 @@
   import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
   import firebaseApp from "../firebase.js";
   import {getFirestore} from "firebase/firestore";
-  import {deleteDoc, addDoc, collection, getDocs, query, getCountFromServer, where, doc, setDoc, updateDoc} from "firebase/firestore"; // , doc, deleteDoc, updateDoc
+  import {deleteDoc, addDoc, collection, getDocs, query, getCountFromServer, where, doc, setDoc, updateDoc} from "firebase/firestore"; 
   import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
   const db = getFirestore(firebaseApp); // Firestore Database
@@ -47,9 +47,7 @@
             rowSelected: [], // the variable we want to make globally in order to use in deleteRow()
             user: false,
             componentKey: 0,
-            // renderComponent: true,
-            count: 0
-            // fbuser: ""
+            count: 0,
         };
     },
 
@@ -58,7 +56,6 @@
     },
 
     created() {
-        // this.createCollection()
         this.getBudget();
         this.rowSelection = "single"
     },
@@ -66,11 +63,9 @@
     methods: {
 
         async getBudget() {
-            // console.log(this.user.email)
             const auth = getAuth();
             const user = auth.currentUser
             this.fbuser = String(user.email) + " Budget Table"
-            // this.fbuser = String(this.user.email)
             const coll = collection(db, this.fbuser);
             const snapshot = await getCountFromServer(coll);
             this.count = snapshot.data().count
@@ -83,7 +78,6 @@
         },
 
         async addNewRow() {
-            // console.log(this.user.email)
             this.fbuser = String(this.user.email) + " Budget Table"
             try {
                 this.count = this.count + 1
@@ -96,13 +90,7 @@
                     comments:"sample"
                 });
                 console.log(newRow)
-                // this.methodThatForcesUpdate()
-                // this.forceRerender()
-                // alert("refresh")
-                // console.log(this.componentKey)
-                // this.$router.go()
                 window.location.reload()
-                // this.$emit("added")
             }
 
             catch(error) {
@@ -112,16 +100,12 @@
         },
 
         async save(event) {
-            // const oldVal = event.oldValue
-            // const columnChanged = event.colDef.field
-            // console.log("old val: " + oldVal)
             console.log(event.colDef.field)
             const currData = event.data
             console.log(typeof currData.amount)
             const auth = getAuth();
             const user = auth.currentUser;
             this.fbuser = String(user.email) + " Budget Table"
-            // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
             const q = query(collection(db, this.fbuser), where("header", "==", currData.header));
             const querySnapshot = await getDocs(q);
             console.log(querySnapshot)
@@ -140,26 +124,32 @@
                 comments:currData.comments
             });
             
-
-            // console.log('onCellValueChanged: ' + event.oldValue + ' to ' + event.newValue + " ")
-
         },
 
         async onRowSelected(event) {
             // store the data that is selected as a variable to use in the delete function
-            this.rowSelected.push(event.node.data)
-            console.log(this.rowSelected)
+            if (this.rowSelected.length == 0) { // if this.row already has 1
+                this.rowSelected.push(event.node.data)
+                console.log(this.rowSelected)
+            } else if (this.rowSelected.length == 1) {
+                this.rowSelected.push(event.node.data)
+                console.log(this.rowSelected)
+            } else { // lst has 2 elements 
+                this.rowSelected.shift()
+                console.log(this.rowSelected)
+            }
+            
+            // this.test = event.node.data()
+            // console.log(this.test)
         },
 
         // after deletion we need to update the index of the rest of the elements
         async deleteRow() {
-            // console.log(this.rowSelected)
             const auth = getAuth();
             const user = auth.currentUser;
             this.fbuser = String(user.email) + " Budget Table"
-            // const currData = this.rowSelected[0]
             const headSelected = this.rowSelected[0].header
-            // const q = query(collection(db, this.fbuser), where("tasks", "==", oldVal));
+            console.log(headSelected)
             const q = query(collection(db, this.fbuser), where("header", "==", headSelected));
             const querySnapshot = await getDocs(q);
             var currID;
@@ -225,7 +215,6 @@
   float: right;
   width: 100%;
   max-width: 1200px;
-  /* margin-right: 20px; */
 }
 
 
@@ -247,7 +236,6 @@
 }
 
 .ag-theme-alpine {
-    /* margin: 1.5%; */
     width: auto;
     height: 400px;
 }
