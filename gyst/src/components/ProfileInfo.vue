@@ -4,7 +4,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-12 mt-3">
+            <div class="col-md-12 ">
                 <div class="card card-widget widget-user-2">
 
                     <div class="widget-user-header bg-warning">
@@ -111,12 +111,8 @@ export default {
 
 <style>
 .container {
-    /* flex-direction: row; */
     background-color: #345;
-    display: block;
-    /* align-content: center; */
-    /* flex: auto; */
-    /* justify-content: center; */
+    width: auto;
 }
 
 .info {
