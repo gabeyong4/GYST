@@ -1,9 +1,5 @@
 <template>
   <SideNavBar />
-  <!-- <div :style="{ 'margin-left' : sidebarWidth}">
-    <router-view></router-view>
-  </div> -->
-  <h1 class="TopBar">GYST</h1><br><br><br>
 
   <div id="app">
     <CalendarMonth/>
@@ -12,7 +8,7 @@
 </template>
 
 <script>
-import SideNavBar from '@/components/SideNavBar.vue';
+// import SideNavBar from '@/components/SideNavBar.vue';
 import { sidebarWidth } from '@/components/state';
 import CalendarMonth from '@/components/CalendarMonth.vue';
 
@@ -21,7 +17,6 @@ export default {
   name: 'App',
   
   components: {
-    SideNavBar,
     CalendarMonth
   },
 
@@ -32,21 +27,15 @@ export default {
 </script>
 
 <style>
-.TopBar {
-    /* padding: 20px; */
-    text-align: center;
-    background-color: #474e5d;
-    color: white;
-  }
 
-  #app {
+  /* #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 20px;
-}
+  margin-top: 20px
+} */
 
 body {
   font-family: sans-serif;
