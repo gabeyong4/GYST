@@ -85,12 +85,13 @@ export default {
             const user = auth.currentUser
             this.email = String(user.email)
             console.log(this.email)
-            this.fbuser = String(user.email) + " To Do List"
+            this.fbuser = String(user.email) + " To Do List" // the collection key for the todo list table
             const coll = collection(db, this.fbuser);
             const snapshot = await getCountFromServer(coll);
             this.count = snapshot.data().count
             console.log('count: ', snapshot.data().count); // getting the count of documents
             let z = await getDocs(query(collection(db, String(this.fbuser))));
+            // Getting the count for the total number of finished status
             z.forEach((doc) => {
                 if (doc.data().status == "finished") {
                     this.tasksDone = this.tasksDone + 1
@@ -100,12 +101,13 @@ export default {
             })
             console.log(this.tasksDone)
 
-            this.fbuser2 = String(user.email) + " Budget Table"
+            this.fbuser2 = String(user.email) + " Budget Table" // the collection key for the budget tracking table
             const coll2 = collection(db, this.fbuser2);
             const snapshot2 = await getCountFromServer(coll2);
             this.count = snapshot2.data().count
             console.log('count: ', snapshot2.data().count); // getting the count of documents
             let y = await getDocs(query(collection(db, String(this.fbuser2))));
+            // Calculating the total amount spent
             y.forEach((doc) => {
                 this.spending = this.spending + doc.data().amount
             })
