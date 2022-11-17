@@ -77,6 +77,9 @@ export default {
     },
 
     methods: {
+        // Objective:
+        // 1. Getting the total number of tasks done
+        // 2. Getting the total amount spent by the individual
         async getData() {
             const auth = getAuth();
             const user = auth.currentUser

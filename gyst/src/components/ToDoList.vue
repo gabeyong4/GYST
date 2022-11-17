@@ -222,6 +222,7 @@ export default {
           });
       },
 
+      // To store the selected data from clicking the checkbox in AG-Grid
       async onRowSelected(event) {
         if (this.rowSelected.length == 0) { // if this.row already has 1
             this.rowSelected.push(event.node.data)
@@ -239,9 +240,10 @@ export default {
       async deleteRow() {
           const auth = getAuth();
           const user = auth.currentUser;
-          this.tduser = String(user.email) + " To Do List"
-          const headSelected = this.rowSelected[0].header
-          const q = query(collection(db, this.tduser), where("header", "==", headSelected));
+          this.tduser = String(user.email) + " To Do List" // the collection key for the user for the to do list table
+          const headSelected = this.rowSelected[0].header // getting the index of the row that we have selected
+          const q = query(collection(db, this.tduser), where("header", "==", headSelected)); // Querying that document from firebase
+          // Retrieving the unique document ID of the document we want to delete
           const querySnapshot = await getDocs(q);
           var currID;
           querySnapshot.forEach((doc) => { 
@@ -249,7 +251,8 @@ export default {
               console.log(doc.id, " => ", doc.data());
           });
 
-          await deleteDoc(doc(db, this.tduser, currID));
+          await deleteDoc(doc(db, this.tduser, currID)); // deleting the document that we have selected from firebase
+          // keeping the remaining the document ID in the list
           const allDocs = await getDocs(collection(db, this.tduser));
           var lst = []
           allDocs.forEach((doc) => {
@@ -258,7 +261,7 @@ export default {
           });
           console.log(lst)
           console.log(lst.length)
-
+          // Resetting the index for all the documents 
           for (let index = 0; index < lst.length; index++) {
               const data = lst[index]
               const userDocRef = doc(db, this.tduser, data[0]);
@@ -266,6 +269,7 @@ export default {
                   "header": index+1,
               });
           }
+          // Refreshing the browser so that it displays on the AG-Grid
           window.location.reload()
       }
 
@@ -284,6 +288,7 @@ export default {
   beforeMount() {
 
       // Each Column Definition results in one Column.
+      // Each Column has its own field and attributes
       this.columnDefs = [
           {headerName:"#" , field:"header", editable: false, sortable: true, checkboxSelection: true},
           {headerName:"Todo Item" , field:"item", editable: true, sortable: true, filter: true},
