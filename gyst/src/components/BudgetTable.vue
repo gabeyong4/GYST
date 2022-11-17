@@ -139,39 +139,39 @@
             
         },
 
+        // To store the selected data from clicking the checkbox in AG-Grid
         async onRowSelected(event) {
             // store the data that is selected as a variable to use in the delete function
             if (this.rowSelected.length == 0) { // if this.row already has 1
                 this.rowSelected.push(event.node.data)
                 console.log(this.rowSelected)
-            } else if (this.rowSelected.length == 1) {
+            } else if (this.rowSelected.length == 1) { // lst has 1 item
                 this.rowSelected.push(event.node.data)
                 console.log(this.rowSelected)
             } else { // lst has 2 elements 
                 this.rowSelected.shift()
                 console.log(this.rowSelected)
             }
-            
-            // this.test = event.node.data()
-            // console.log(this.test)
         },
 
         // after deletion we need to update the index of the rest of the elements
         async deleteRow() {
             const auth = getAuth();
             const user = auth.currentUser;
-            this.fbuser = String(user.email) + " Budget Table"
-            const headSelected = this.rowSelected[0].header
+            this.fbuser = String(user.email) + " Budget Table" // the collection key for the user for the to budget tracking table
+            const headSelected = this.rowSelected[0].header // getting the index of the row that we have selected
             console.log(headSelected)
-            const q = query(collection(db, this.fbuser), where("header", "==", headSelected));
+            const q = query(collection(db, this.fbuser), where("header", "==", headSelected)); // Querying that document from firebase
+            // Retrieving the unique document ID of the document we want to delete
             const querySnapshot = await getDocs(q);
             var currID;
-            querySnapshot.forEach((doc) => { // did not account for multiple queries here
+            querySnapshot.forEach((doc) => { 
                 currID = doc.id
                 console.log(doc.id, " => ", doc.data());
             });
-
-            await deleteDoc(doc(db, this.fbuser, currID));
+            
+            await deleteDoc(doc(db, this.fbuser, currID)); // deleting the document that we have selected from firebase
+            // keeping the remaining the document ID in the list
             const allDocs = await getDocs(collection(db, this.fbuser));
             var lst = []
             allDocs.forEach((doc) => {
@@ -181,6 +181,7 @@
             console.log(lst)
             console.log(lst.length)
 
+            // Resetting the index for all the documents 
             for (let index = 0; index < lst.length; index++) {
                 const data = lst[index]
                 const userDocRef = doc(db, this.fbuser, data[0]);
@@ -188,6 +189,7 @@
                     "header": index+1,
                 });
             }
+            // Refreshing the browser so that it displays on the AG-Grid
             window.location.reload()
 
         }
@@ -207,6 +209,7 @@
     beforeMount() {
 
         // Each Column Definition results in one Column.
+        // Each Column has its own field and attributes
         this.columnDefs = [
             {headerName:"#" , field:"header", editable: false, sortable: true, checkboxSelection: true},
             {headerName:"Task Details" , field:"tasks", editable: true, sortable: true, filter: true},

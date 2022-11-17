@@ -55,6 +55,8 @@ export default {
 </script>
 
 <style>
+
+
 :root {
   --sidebar-bg-color: #267FCA;
   --sidebar-item-hover: white;
